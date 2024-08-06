@@ -1,5 +1,5 @@
-FROM oven/bun:1.1
+FROM node:20.16
 
 WORKDIR /project
-COPY package.json bun.lockb ./
-RUN bun install
+COPY package.json yarn.lock ./
+RUN yarn install

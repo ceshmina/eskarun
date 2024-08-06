@@ -11,7 +11,7 @@ docker compose up next
 またはdevcontainerを使っている場合は、コンテナ内で
 
 ```sh
-bun dev
+yarn dev
 ```
 
 上記コマンドで開発用サーバーが `localhost:8080` で起動します。

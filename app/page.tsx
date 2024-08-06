@@ -2,6 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 type Article = {
   slug: string
@@ -45,7 +46,7 @@ export default async function Page() {
           <div key={article.slug} className="my-8">
             <h2 className="my-2 text-lg font-bold">{article.slug}</h2>
             <div>
-              {<Markdown components={{
+              {<Markdown remarkPlugins={[remarkGfm]} components={{
                 p: ({ children }) => <p className="font-base font-normal my-1">{children}</p>,
                 img: ({ src }) => <img src={src} className="my-4" />,
                 hr: () => <hr className="my-8 mx-auto w-72 h-1 bg-gray-300" />,

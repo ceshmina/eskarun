@@ -38,18 +38,18 @@ export default async function Page() {
   return (
     <main className="p-4">
       <h1 className="my-2 text-2xl font-bold">diary</h1>
-      <p className="text-base font-medium">apkasの日記</p>
+      <p className="text-base font-normal">apkasの日記</p>
 
       <div className="my-8">
         {articles.map((article) => (
           <div key={article.slug} className="my-8">
             <h2 className="my-2 text-lg font-bold">{article.slug}</h2>
             <div>
-              <Markdown components={{
-                p: ({ children }) => <p className="font-base font-medium my-1">{children}</p>,
+              {<Markdown components={{
+                p: ({ children }) => <p className="font-base font-normal my-1">{children}</p>,
                 img: ({ src }) => <img src={src} className="my-4" />,
                 hr: () => <hr className="my-8 mx-auto w-72 h-1 bg-gray-300" />,
-              }}>{article.content}</Markdown>
+              }}>{article.content}</Markdown>}
             </div>
           </div>
         ))}

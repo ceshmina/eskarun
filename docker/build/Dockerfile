@@ -1,5 +1,7 @@
 FROM node:20.16
 
 WORKDIR /project
-COPY package.json yarn.lock ./
+ENV NODE_ENV=production
+
+COPY . .
 RUN yarn install

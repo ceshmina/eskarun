@@ -5,8 +5,8 @@ import './globals.css'
 const mainFont = Noto_Sans_JP({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'diary',
-  description: 'apkasの日記'
+  title: 'eskarun',
+  description: "shu's diary"
 }
 
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -1,10 +1,35 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { parse, format } from 'date-fns'
 import matter from 'gray-matter'
 
-export type Article = {
-  slug: string
-  content: string
+export class Article {
+  readonly slug: string
+  readonly content: string
+
+  constructor(slug: string, content: string) {
+    this.slug = slug
+    this.content = content
+  }
+
+  formatTitle() {
+    return format(parse(this.slug, 'yyyyMMdd', new Date()), 'yyyy年M月d日')
+  }
+
+  imageUrls() {
+    const urls: string[] = []
+    const regex = /!\[.*?\]\((.*?)\)/g
+    let match: RegExpExecArray | null
+    while ((match = regex.exec(this.content)) !== null) {
+      urls.push(match[1])
+    }
+    return urls
+  }
+
+  thumbnailUrls() {
+    const urls = this.imageUrls()
+    return urls.map(url => url.replace('medium', 'thumbnail'))
+  }
 }
 
 export const getArticles = async () => {
@@ -20,10 +45,7 @@ export const getArticles = async () => {
         const markdownBody = (await fs.readFile(fullPath)).toString()
         const { content, data } = matter(markdownBody)
         if (data.status === 'draft') continue
-        articles.push({
-          slug: p.replace('.md', ''),
-          content
-        })
+        articles.push(new Article(p.replace('.md', ''), content))
       }
     }
   }

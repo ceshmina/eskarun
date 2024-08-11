@@ -1,10 +1,11 @@
 import Link from 'next/link'
-import { parse, format } from 'date-fns'
-import { type Article, getArticles } from '@/core/articles'
+import { Article, getArticles } from '@/core/articles'
 
 function ArticleCard({ article }: Readonly<{ article: Article }>) {
   const { slug, content } = article
-  const title = format(parse(slug, 'yyyyMMdd', new Date()), 'yyyy年M月d日')
+  const title = article.formatTitle()
+  const thumbnailUrls = article.thumbnailUrls()
+
   return (
     <div key={slug} className="my-8">
       <h2 className="my-2 text-lg font-bold">
@@ -13,6 +14,11 @@ function ArticleCard({ article }: Readonly<{ article: Article }>) {
       <p className="my-2 text-sm font-light line-clamp-3">
         {content}
       </p>
+      <div className="flex flex-wrap">
+        {thumbnailUrls.map((url) => (
+          <img key={url} src={url} className="w-16 mr-2 mb-2" />
+        ))}
+      </div>
     </div>
   )
 }

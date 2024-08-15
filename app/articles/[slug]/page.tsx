@@ -3,6 +3,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Article, getArticles, getArticleWithNexts} from '@/core/articles'
+import React from 'react'
 
 export async function generateStaticParams() {
   const articles = await getArticles()
@@ -15,6 +16,14 @@ function ArticleLink({ article }: Readonly<{ article: Article }>) {
       {article.formatTitle()}
     </Link>
   )
+}
+
+const hasOnlyImage = (children: React.ReactNode) => {
+  if (React.Children.count(children) !== 1) {
+    return false
+  }
+  const child = React.Children.toArray(children)[0]
+  return React.isValidElement(child) && child.props.node.tagName === 'img'
 }
 
 export default async function Page({ params }: Readonly<{ params: { slug: string } }>) {
@@ -37,8 +46,14 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
     
       <div key={article.slug} className="my-8">
         {<Markdown remarkPlugins={[remarkGfm]} components={{
-          p: ({ children }) => <p className="text-base font-normal my-1">{children}</p>,
-          img: ({ src }) => <img src={src} className="my-4" />,
+          p: ({ children }) => (
+            hasOnlyImage(children) ? children as React.ReactElement :
+            <p className="text-base font-normal my-1">{children}</p>
+          ),
+          img: ({ src, alt }) => (<div className="my-4">
+            <img src={src} className="my-2" />
+            <p className="text-center text-sm italic text-gray-500">{alt}</p>
+          </div>),
           hr: () => <hr className="my-8 mx-auto w-72 h-1 bg-gray-300" />,
         }}>{article.content}</Markdown>}
       </div>

@@ -26,7 +26,7 @@ function ArticleCard({ article }: Readonly<{ article: Article }>) {
 export default async function Page() {
   const articles = await getArticles()
   return (
-    <main className="p-4">
+    <main className="max-w-screen-md mx-auto p-4">
       <div className="my-4">
         <h1 className="text-2xl font-bold">eskarun</h1>
         <p className="text-base font-normal">shu&apos;s diary</p>

@@ -26,7 +26,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
 
   const title = article.formatTitle()
   return (
-    <main className="p-4">
+    <main className="max-w-screen-md mx-auto p-4">
       <div className="my-4">
         <p className="text-base font-normal">
           <FaChevronLeft className="inline-block pb-1" />

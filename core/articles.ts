@@ -76,3 +76,11 @@ export const getArticleWithNexts = async (slug: string) => {
   const prev = articles[index + 1] || null
   return { article: articles[index], next, prev }
 }
+
+export const getArticlesByCamera = async (camera: string) => {
+  const articles = await getArticles()
+  const filter = await Promise.all(
+    articles.map(article => article.uniqueCameras().then(cameras => cameras.includes(camera)))
+  )
+  return articles.filter((_, i) => filter[i])
+}

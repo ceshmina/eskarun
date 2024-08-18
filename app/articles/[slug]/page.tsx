@@ -64,7 +64,9 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
       {uniqueCameras.length > 0 && <p className="text-sm text-gray-500 my-8 leading-6">
         <FaCamera className="text-base inline-block mr-2 pb-1" />
         {uniqueCameras.map((camera, i) => (
-          <span key={i} className="mr-2 mt-2 px-1 inline-block border-[1px] border-gray-500 rounded">{camera}</span>
+          <span key={i} className="mr-2 mt-2 px-1 inline-block text-blue-500 border-[1px] border-gray-500 rounded">
+            <Link href={`/cameras/${camera}`}>{camera}</Link>
+          </span>
         ))}
       </p>}
     

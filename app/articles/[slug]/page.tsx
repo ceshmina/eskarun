@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FaCamera } from 'react-icons/fa'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -34,6 +35,8 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
   }
 
   const title = article.formatTitle()
+  const uniqueCameras = await article.uniqueCameras()
+
   return (
     <main className="max-w-screen-md mx-auto p-4">
       <div className="my-4">
@@ -58,6 +61,13 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
         }}>{article.content}</Markdown>}
       </div>
 
+      {uniqueCameras.length > 0 && <p className="text-sm text-gray-500 my-8 leading-6">
+        <FaCamera className="text-base inline-block mr-2 pb-1" />
+        {uniqueCameras.map((camera, i) => (
+          <span key={i} className="mr-2 mt-2 px-1 inline-block border-[1px] border-gray-500 rounded">{camera}</span>
+        ))}
+      </p>}
+    
       <div className="my-8 flex justify-between">
         {next ? <div>
           <p>次の日記</p>

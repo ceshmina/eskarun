@@ -30,6 +30,22 @@ export class Article {
     const urls = this.imageUrls()
     return urls.map(url => url.replace('medium', 'thumbnail'))
   }
+
+  exifUrls() {
+    const urls = this.imageUrls()
+    return urls.map(url => url.replace('medium', 'exif').replace('.webp', '.json'))
+  }
+
+  async uniqueCameras() {
+    const exifs = await Promise.all(
+      this.exifUrls().map(url => fetch(url).then(res => res.json()))
+    )
+    const cameras = exifs.map(exif => exif.Model as string)
+    const lenses = exifs.map(exif => exif.LensModel as string)
+    const uniqueCameras = Array.from(new Set(cameras))
+    const uniqueLenses = Array.from(new Set(lenses))
+    return uniqueCameras.concat(uniqueLenses)
+  }
 }
 
 export const getArticles = async () => {

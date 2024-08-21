@@ -11,7 +11,7 @@ export async function generateStaticParams() {
     articles.map(article => article.uniqueCameras())
   ))
   const uniqueCameras = Array.from(new Set(uniqueCamerasList.flat()))
-  return uniqueCameras.map(camera => ({ name: encodeURIComponent(camera) }))
+  return uniqueCameras.map(camera => ({ name: camera }))
 }
 
 export default async function Page({ params }: Readonly<{ params: { name: string } }>) {

@@ -4,7 +4,6 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Article, getArticles, getArticleWithNexts} from '@/core/articles'
-import { getCameraName } from '@/core/cameras'
 import React from 'react'
 
 export async function generateStaticParams() {
@@ -21,15 +20,9 @@ function ArticleLink({ article }: Readonly<{ article: Article }>) {
 }
 
 function CameraLink({ camera }: Readonly<{ camera: string }>) {
-  const name = getCameraName(camera)
-  if (!name) {
-    return null
-  }
-
-  const href = `/cameras/${encodeURIComponent(name)}`
   return (
     <span className="mr-2 mt-2 px-1 inline-block text-blue-500 border-[1px] border-gray-300 rounded">
-      <Link href={href}>{name}</Link>
+      <Link href={`/cameras/${camera}`}>{camera}</Link>
     </span>
   )
 }

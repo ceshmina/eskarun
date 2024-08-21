@@ -2,6 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { parse, format } from 'date-fns'
 import matter from 'gray-matter'
+import { getCameraName } from '@/core/cameras'
 
 export class Article {
   readonly slug: string
@@ -42,9 +43,10 @@ export class Article {
     )
     const cameras = exifs.map(exif => exif.Model as string)
     const lenses = exifs.map(exif => exif.LensModel as string)
-    const uniqueCameras = Array.from(new Set(cameras))
-    const uniqueLenses = Array.from(new Set(lenses))
-    return uniqueCameras.concat(uniqueLenses)
+    const uniques = Array.from(new Set(cameras)).concat(Array.from(new Set(lenses)))
+    const names = uniques.map(unique => getCameraName(unique))
+      .filter(name => name !== null) as string[]
+    return names
   }
 }
 

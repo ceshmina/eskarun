@@ -14,8 +14,3 @@ export const getCameraName = (slug: string) => {
   const camera = cameraMaster.find(camera => camera.slug === slug)
   return camera ? camera.name : null
 }
-
-export const getCameraSlug = (name: string) => {
-  const camera = cameraMaster.find(camera => camera.name === name)
-  return camera ? camera.slug : null
-}

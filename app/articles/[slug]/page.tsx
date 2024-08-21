@@ -66,13 +66,13 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
         {<Markdown remarkPlugins={[remarkGfm]} components={{
           p: ({ children }) => (
             hasOnlyImage(children) ? children as React.ReactElement :
-            <p className="text-base font-normal my-1">{children}</p>
+            <p className="text-base font-normal my-2">{children}</p>
           ),
-          img: ({ src, alt }) => (<div className="my-4">
+          img: ({ src, alt }) => (<div className="my-8">
             <img src={src} className="my-2" />
             <p className="text-center text-sm italic text-gray-500">{alt}</p>
           </div>),
-          hr: () => <hr className="my-8 mx-auto w-72 h-1 bg-gray-300" />,
+          hr: () => <hr className="my-12 mx-auto w-72 h-1 bg-gray-300" />,
         }}>{article.content}</Markdown>}
       </div>
 

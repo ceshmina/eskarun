@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { FaCamera } from 'react-icons/fa'
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6'
+import { FaChevronLeft, FaChevronRight, FaLocationDot } from 'react-icons/fa6'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Article, getArticles, getArticleWithNexts} from '@/core/articles'
@@ -69,7 +69,12 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
         }}>{article.content}</Markdown>}
       </div>
 
-      {uniqueCameras.length > 0 && <p className="text-sm text-gray-500 my-8 leading-6">
+      <p className="text-sm text-gray-500 mt-16 mb-2 leading-6">
+        <FaLocationDot className="text-base inline-block mr-2 pb-[2px]" />
+        {article.location}
+      </p>
+
+      {uniqueCameras.length > 0 && <p className="text-sm text-gray-500 mt-2 mb-8 leading-6">
         <FaCamera className="text-base inline-block mr-2 pb-1" />
         {uniqueCameras.map((camera, i) => (<CameraLink key={i} camera={camera} />))}
       </p>}

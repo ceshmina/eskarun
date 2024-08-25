@@ -6,10 +6,12 @@ import { getCameraName } from '@/core/cameras'
 
 export class Article {
   readonly slug: string
+  readonly location: string
   readonly content: string
 
-  constructor(slug: string, content: string) {
+  constructor(slug: string, location: string, content: string) {
     this.slug = slug
+    this.location = location
     this.content = content
   }
 
@@ -62,8 +64,11 @@ export const getArticles = async () => {
       } else if (p.endsWith('.md')) {
         const markdownBody = (await fs.readFile(fullPath)).toString()
         const { content, data } = matter(markdownBody)
-        if (data.status === 'draft') continue
-        articles.push(new Article(p.replace('.md', ''), content))
+        if (data.status === 'draft') {
+          continue
+        }
+        const location = data.location || 'Tokyo, Japan'
+        articles.push(new Article(p.replace('.md', ''), location, content))
       }
     }
   }

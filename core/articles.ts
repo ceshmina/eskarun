@@ -6,17 +6,20 @@ import { getCameraName } from '@/core/cameras'
 
 export class Article {
   readonly slug: string
+  readonly title: string | null
   readonly location: string
   readonly content: string
 
-  constructor(slug: string, location: string, content: string) {
+  constructor(slug: string, title: string | null, location: string, content: string) {
     this.slug = slug
+    this.title = title
     this.location = location
     this.content = content
   }
 
   formatTitle() {
-    return format(parse(this.slug, 'yyyyMMdd', new Date()), 'yyyy年M月d日')
+    const date = format(parse(this.slug, 'yyyyMMdd', new Date()), 'yyyy年M月d日')
+    return this.title ? `${date}: ${this.title}` : date
   }
 
   imageUrls() {
@@ -43,12 +46,12 @@ export class Article {
     const exifs = await Promise.all(
       this.exifUrls().map(url => fetch(url).then(res => res.json()))
     )
-    const cameras = exifs.map(exif => exif.Model as string)
-    const lenses = exifs.map(exif => exif.LensModel as string)
-    const uniques = Array.from(new Set(cameras)).concat(Array.from(new Set(lenses)))
-    const names = uniques.map(unique => getCameraName(unique))
-      .filter(name => name !== null) as string[]
-    return names
+    const cameras = exifs.map(exif => getCameraName(exif.Model))
+      .filter(name => name !== null)
+    const lenses = exifs.map(exif => getCameraName(exif.LensModel))
+      .filter(name => name !== null)
+    return Array.from(new Set(cameras))
+      .concat(Array.from(new Set(lenses)))
   }
 }
 
@@ -68,7 +71,7 @@ export const getArticles = async () => {
           continue
         }
         const location = data.location || 'Tokyo, Japan'
-        articles.push(new Article(p.replace('.md', ''), location, content))
+        articles.push(new Article(p.replace('.md', ''), data.title || null, location, content))
       }
     }
   }

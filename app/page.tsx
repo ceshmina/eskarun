@@ -2,7 +2,7 @@ import { getArticles } from '@/core/articles'
 import ArticleCard from '@/components/card'
 
 export default async function Page() {
-  const articles = await getArticles()
+  const articles = (await getArticles()).slice(0, 30)
   return (
     <main className="max-w-screen-md mx-auto p-4">
       <div className="my-4">

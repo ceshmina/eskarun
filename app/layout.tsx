@@ -28,7 +28,7 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
             <ul className="my-4">
               {articlesByMonth.map(({ month, count }) => {
                 const formatMonth = format(parse(month, 'yyyyMM', new Date()), 'yyyy年M月')
-                return (<li key={month} className="my-1 text-base font-normal">
+                return (<li key={month} className="my-1 text-sm font-normal">
                   <Link href={`/months/${month}`} className="text-blue-500">{formatMonth} ({count})</Link>
                 </li>)
               })}
@@ -39,7 +39,7 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
             <h2 className="text-lg font-bold">撮影機材別</h2>
             <ul className="my-4">
               {articlesByCamera.map(({ camera, count }) => {
-                return (<li key={camera} className="my-1 text-base font-normal">
+                return (<li key={camera} className="my-1 text-sm font-normal">
                   <Link href={`/cameras/${camera}`} className="text-blue-500">{camera} ({count})</Link>
                 </li>)
               })}
@@ -50,7 +50,7 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
             <h2 className="text-lg font-bold">場所別</h2>
             <ul className="my-4">
               {articlesByLocation.map(({ location, count }) => {
-                return (<li key={location} className="my-1 text-base font-normal">
+                return (<li key={location} className="my-1 text-sm font-normal">
                   <Link href={`/locations/${location}`} className="text-blue-500">{location} ({count})</Link>
                 </li>)
               })}

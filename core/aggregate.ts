@@ -27,3 +27,15 @@ export const aggArticlesByCamera = async () => {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([camera, count]) => ({ camera, count }))
 }
+
+export const aggArticlesByLocation = async () => {
+  const articles = await getArticles()
+  const agg = new Map<string, number>()
+  articles.forEach(article => {
+    const location = article.location
+    agg.set(location, (agg.get(location) || 0) + 1)
+  })
+  return Array.from(agg.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([location, count]) => ({ location, count }))
+}

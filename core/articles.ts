@@ -114,3 +114,8 @@ export const getArticlesByCamera = async (camera: string) => {
   )
   return articles.filter((_, i) => filter[i])
 }
+
+export const getArticlesByLocation = async (location: string) => {
+  const articles = await getArticles()
+  return articles.filter(article => article.location === location)
+}

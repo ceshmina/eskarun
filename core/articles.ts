@@ -17,6 +17,10 @@ export class Article {
     this.content = content
   }
 
+  get month() {
+    return this.slug.slice(0, 6)
+  }
+
   formatTitle() {
     const date = format(parse(this.slug, 'yyyyMMdd', new Date()), 'yyyy年M月d日')
     return this.title ? `${date}: ${this.title}` : date
@@ -85,6 +89,11 @@ export const getArticleWithNexts = async (slug: string) => {
   const next = articles[index - 1] || null
   const prev = articles[index + 1] || null
   return { article: articles[index], next, prev }
+}
+
+export const getArticlesByMonth = async (month: string) => {
+  const articles = await getArticles()
+  return articles.filter(article => article.month === month)
 }
 
 export const getArticlesByCamera = async (camera: string) => {

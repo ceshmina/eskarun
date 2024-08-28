@@ -41,21 +41,38 @@ export class Article {
     return urls.map(url => url.replace('medium', 'thumbnail'))
   }
 
-  exifUrls() {
+  async exifs() {
     const urls = this.imageUrls()
-    return urls.map(url => url.replace('medium', 'exif').replace('.webp', '.json'))
+    const exifUrls = urls.map(url => url.replace('medium', 'exif').replace('.webp', '.json'))
+    const exifs = (await Promise.all(
+      exifUrls.map(url => fetch(url).then(res => res.json()))
+    )).map(exif => ({
+      model: getCameraName(exif.Model),
+      lens: getCameraName(exif.LensModel)
+    }))
+    return new Map(urls.map((url, i) => [url, exifs[i]]))
   }
 
   async uniqueCameras() {
-    const exifs = await Promise.all(
-      this.exifUrls().map(url => fetch(url).then(res => res.json()))
-    )
-    const cameras = exifs.map(exif => getCameraName(exif.Model))
+    const exifs = Array.from((await this.exifs()).values())
+    const cameras = exifs.map(exif => exif.model)
       .filter(name => name !== null)
-    const lenses = exifs.map(exif => getCameraName(exif.LensModel))
+    const lenses = exifs.map(exif => exif.lens)
       .filter(name => name !== null)
     return Array.from(new Set(cameras))
       .concat(Array.from(new Set(lenses)))
+  }
+
+  async cameraCaptions() {
+    const exifs = await this.exifs()
+    return new Map(Array.from(exifs).map(([url, exif]) => {
+      const model = exif.model || ''
+      let caption = `${model}`
+      if (model.indexOf('iPhone') && exif.lens) {
+        caption += `, ${exif.lens}`
+      }
+      return [url, caption]
+    }))
   }
 }
 

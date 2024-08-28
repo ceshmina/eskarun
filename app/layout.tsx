@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { parse, format } from 'date-fns'
 import { aggArticlesByMonth, aggArticlesByCamera, aggArticlesByLocation } from '@/core/aggregate'
 import './globals.css'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const mainFont = Noto_Sans_JP({ subsets: ['latin'] })
 

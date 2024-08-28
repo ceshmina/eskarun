@@ -30,3 +30,11 @@ export const getCameraName = (slug: string) => {
   const camera = cameraMaster.find(camera => camera.slug === slug)
   return camera ? camera.name : null
 }
+
+export const getCameraCaption = async (src: string) => {
+  const exifUrl = src.replace('medium', 'exif').replace('.webp', '.json')
+  const exif = await fetch(exifUrl, { mode: 'no-cors' }).then(res => res.json())
+  const model = getCameraName(exif.Model)
+  const lens = getCameraName(exif.LensModel)
+  return `${model}${lens ? ` + ${lens}` : ''}`
+}

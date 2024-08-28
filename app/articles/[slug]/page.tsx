@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import { FaCamera } from 'react-icons/fa'
 import { FaChevronLeft, FaChevronRight, FaLocationDot } from 'react-icons/fa6'
@@ -6,7 +7,7 @@ import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import { Article, getArticles, getArticleWithNexts} from '@/core/articles'
-import React from 'react'
+import Image from '@/components/image'
 import 'katex/dist/katex.min.css'
 
 export async function generateStaticParams() {
@@ -47,6 +48,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
 
   const title = article.formatTitle()
   const uniqueCameras = await article.uniqueCameras()
+  const cameraCaptions = await article.cameraCaptions()
 
   return (
     <main className="max-w-screen-md mx-auto p-4">
@@ -71,8 +73,8 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
               <Link href={href} target="_blank" className="text-blue-500">{children}</Link> :
               <span>{children}</span>
             ),
-            img: ({ src, alt }) => (<div className="my-8">
-              <img src={src} className="my-2" />
+            img: ({ src, alt }) => (src && <div className="my-8">
+              <Image src={src} caption={cameraCaptions.get(src) || ''} />
               <p className="text-center text-sm italic text-gray-500">{alt}</p>
             </div>),
             ul: ({ children }) => <ul className="my-4">{children}</ul>,

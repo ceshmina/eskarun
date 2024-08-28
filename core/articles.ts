@@ -93,7 +93,18 @@ export const getArticleWithNexts = async (slug: string) => {
 
 export const getArticlesByMonth = async (month: string) => {
   const articles = await getArticles()
-  return articles.filter(article => article.month === month)
+  const articlesByMonth = articles
+    .map((article, index) => ({ article, index }))
+    .filter(({ article }) => article.month === month)
+  const minIndex = articlesByMonth.length > 0 ? articlesByMonth[0].index : 0
+  const maxIndex = articlesByMonth.length > 0 ? articlesByMonth[articlesByMonth.length - 1].index : 0
+  const nextMonth = articles[minIndex - 1] ? articles[minIndex - 1].month : null
+  const prevMonth = articles[maxIndex + 1] ? articles[maxIndex + 1].month : null
+  return {
+    articles: articlesByMonth.map(({ article }) => article),
+    nextMonth,
+    prevMonth
+  }
 }
 
 export const getArticlesByCamera = async (camera: string) => {

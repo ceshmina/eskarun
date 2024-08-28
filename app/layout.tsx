@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
 import Link from 'next/link'
 import { parse, format } from 'date-fns'
-import { aggArticlesByMonth } from '@/core/aggregate'
+import { aggArticlesByMonth, aggArticlesByCamera } from '@/core/aggregate'
 import './globals.css'
 
 const mainFont = Noto_Sans_JP({ subsets: ['latin'] })
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 
 export default async function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   const articlesByMonth = await aggArticlesByMonth()
+  const articlesByCamera = await aggArticlesByCamera()
   return (
     <html lang="ja">
       <body className={mainFont.className}>
@@ -27,6 +28,17 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
                 const formatMonth = format(parse(month, 'yyyyMM', new Date()), 'yyyy年M月')
                 return (<li key={month} className="my-1 text-base font-normal">
                   <Link href={`/months/${month}`} className="text-blue-500">{formatMonth} ({count})</Link>
+                </li>)
+              })}
+            </ul>
+          </div>
+
+          <div className="mt-12">
+            <h2 className="text-lg font-bold">撮影機材別</h2>
+            <ul className="my-4">
+              {articlesByCamera.map(({ camera, count }) => {
+                return (<li key={camera} className="my-1 text-base font-normal">
+                  <Link href={`/cameras/${camera}`} className="text-blue-500">{camera} ({count})</Link>
                 </li>)
               })}
             </ul>

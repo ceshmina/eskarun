@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import Zoom, { UncontrolledProps } from 'react-medium-image-zoom'
-import { getCameraCaption } from '@/core/cameras'
 
 const cx = (mods: Record<string, boolean>): string => {
   const cns: string[] = []
@@ -41,7 +40,7 @@ export default async function Image({ src, caption }: Readonly<{ src: string, ca
       <figure>
         {img}
         <figcaption className={classCaption}>
-          {caption}
+          <p dangerouslySetInnerHTML={{ __html: caption }} />
         </figcaption>
       </figure>
     </>)

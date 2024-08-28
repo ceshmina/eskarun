@@ -48,7 +48,12 @@ export class Article {
       exifUrls.map(url => fetch(url).then(res => res.json()))
     )).map(exif => ({
       model: getCameraName(exif.Model),
-      lens: getCameraName(exif.LensModel)
+      lens: getCameraName(exif.LensModel),
+      focalLength: exif.FocalLength || null,
+      focalLength35: exif.FocalLengthIn35mmFilm || null,
+      fNumber: exif.FNumber || null,
+      shutterSpeed: exif.ExposureTime || null,
+      iso: exif.ISOSpeedRatings || null
     }))
     return new Map(urls.map((url, i) => [url, exifs[i]]))
   }
@@ -67,10 +72,37 @@ export class Article {
     const exifs = await this.exifs()
     return new Map(Array.from(exifs).map(([url, exif]) => {
       const model = exif.model || ''
-      let caption = `${model}`
+      const captions1 = [`${model}`]
       if (model.indexOf('iPhone') && exif.lens) {
-        caption += `, ${exif.lens}`
+        captions1.push(`${exif.lens}`)
       }
+      const captions2 = []
+      if (model.indexOf('iPhone') && exif.focalLength) {
+        if (exif.focalLength35 && exif.focalLength !== exif.focalLength35) {
+          captions2.push(`${exif.focalLength} (${exif.focalLength35}) mm`)
+        } else {
+          captions2.push(`${exif.focalLength}mm`)
+        }
+      } else if (!model.indexOf('iPhone') && exif.focalLength35) {
+        captions2.push(`${exif.focalLength35}mm`)
+      }
+      if (model.indexOf('iPhone')) {
+        if (exif.fNumber) {
+          captions2.push(`F${exif.fNumber}`)
+        }
+        if (exif.shutterSpeed) {
+          const ss = Number(exif.shutterSpeed)
+          if (ss >= 1) {
+            captions2.push(`${ss}s`)
+          } else {
+            captions2.push(`1/${1 / ss}s`)
+          }
+        }
+        if (exif.iso) {
+          captions2.push(`ISO${exif.iso}`)
+        }
+      }
+      const caption = captions1.join(', ') + (captions2.length > 0 ? `<br>- ${captions2.join(', ')}` : '')
       return [url, caption]
     }))
   }

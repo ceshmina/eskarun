@@ -56,6 +56,12 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
               })}
             </ul>
           </div>
+
+          <div className="mt-12 mb-16">
+            <h2 className="text-base font-bold">
+              <Link href="/photos" className="text-blue-500">すべての写真</Link>
+            </h2>
+          </div>
         </footer>
       </body>
     </html>

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Noto_Sans_JP } from 'next/font/google'
+import { Noto_Sans_JP, Source_Code_Pro } from 'next/font/google'
 import Link from 'next/link'
 import { parse, format } from 'date-fns'
 import { aggArticlesByMonth, aggArticlesByCamera, aggArticlesByLocation } from '@/core/aggregate'
@@ -7,6 +7,7 @@ import './globals.css'
 import 'react-medium-image-zoom/dist/styles.css'
 
 const mainFont = Noto_Sans_JP({ subsets: ['latin'] })
+export const codeFont = Source_Code_Pro({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'eskarun',

@@ -28,7 +28,7 @@ export class Article {
 
   imageUrls() {
     const urls: string[] = []
-    const regex = /!\[.*?\]\((.*?)\)/g
+    const regex = /(https:\/\/photos\.apkas\.net\/medium\/.*?\.webp)/g
     let match: RegExpExecArray | null
     while ((match = regex.exec(this.content)) !== null) {
       urls.push(match[1])
@@ -120,7 +120,7 @@ export const getArticles = async () => {
       } else if (p.endsWith('.md')) {
         const markdownBody = (await fs.readFile(fullPath)).toString()
         const { content, data } = matter(markdownBody)
-        if (data.status === 'draft') {
+        if (process.env.NODE_ENV === 'production' && data.status === 'draft') {
           continue
         }
         const location = data.location || 'Tokyo, Japan'

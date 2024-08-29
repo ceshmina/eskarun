@@ -3,9 +3,12 @@ import Link from 'next/link'
 import { FaCamera } from 'react-icons/fa'
 import { FaChevronLeft, FaChevronRight, FaLocationDot } from 'react-icons/fa6'
 import Markdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
 import rehypeKatex from 'rehype-katex'
+import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import { codeFont } from '@/app/layout'
 import { Article, getArticles, getArticleWithNexts} from '@/core/articles'
 import Image from '@/components/image'
 import 'katex/dist/katex.min.css'
@@ -63,24 +66,32 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
       <div key={article.slug} className="my-8">
         {<Markdown
           remarkPlugins={[remarkGfm, remarkMath]}
-          rehypePlugins={[rehypeKatex]}
+          rehypePlugins={[rehypeHighlight, rehypeKatex, rehypeRaw]}
           components={{
             p: ({ children }) => (
               hasOnlyImage(children) ? children as React.ReactElement :
               <p className="text-base font-normal my-2">{children}</p>
             ),
+            h2: ({ children }) => <h2 className="text-lg font-bold mt-8 mb-4">{children}</h2>,
             a: ({ children, href }) => (href ?
               <Link href={href} target="_blank" className="text-blue-500">{children}</Link> :
               <span>{children}</span>
             ),
-            img: ({ src, alt }) => (src && <div className="my-8">
+            img: ({ src, alt }) => (src && <div className="py-4">
               <Image src={src} caption={cameraCaptions.get(src) || ''} />
               <p className="text-center text-sm italic text-gray-500">{alt}</p>
             </div>),
             ul: ({ children }) => <ul className="my-4">{children}</ul>,
             li: ({ children }) => <li className="list-disc my-1 ml-5">{children}</li>,
+            pre: ({ children }) => <pre className="my-4 p-4 bg-gray-100">{children}</pre>,
+            code: ({ className, children }) => (
+              className ?  // pre内の場合、rehye-highlightによってclassNameが付与される
+              <code className={codeFont.className}>{children}</code> :
+              <code className={`${codeFont.className} bg-gray-100 mx-1 p-1`}>{children}</code>
+            ),
             hr: () => <hr className="my-12 mx-auto w-72 h-1 bg-gray-300" />,
             blockquote: ({ children }) => <blockquote className="my-8 ml-2 pl-4 border-l-4 border-gray-300">{children}</blockquote>,
+            table: ({ children }) => <table className="table-fixed">{children}</table>
           }}
         >{article.content}</Markdown>}
       </div>

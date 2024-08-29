@@ -14,9 +14,9 @@ export default function ArticleCard({ article }: Readonly<{ article: Article }>)
       <p className="my-2 text-sm font-light line-clamp-3">
         {content}
       </p>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap mr-[-2%] md:mr-[-1%]">
         {thumbnailUrls.map((url) => (
-          <img key={url} src={url} className="w-16 mr-2 mb-2" />
+          <img key={url} src={url} className="w-[18%] md:w-[9%] mr-[2%] mb-[2%] md:mr-[1%] md:mb-[1%]" />
         ))}
       </div>
     </div>

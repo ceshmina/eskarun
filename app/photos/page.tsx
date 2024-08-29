@@ -7,8 +7,8 @@ export default async function Page() {
   const articles = await getArticles()
   const photos: { url: string, date: string | null }[] = articles.map(article =>
     article.thumbnailUrls()
-      .map((url, index) => (!index ? { url, date: article.slug } : { url, date: null }))
       .reverse()
+      .map((url, index) => (!index ? { url, date: article.slug } : { url, date: null }))
   ).flat()
 
   return (

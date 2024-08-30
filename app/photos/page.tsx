@@ -6,10 +6,13 @@ import Thumbnail from '@/components/thumbnail'
 
 export default async function Page() {
   const articles = await getArticles()
-  const photos: { url: string, date: string | null }[] = articles.map(article =>
-    article.smallUrls()
-      .reverse()
-      .map((url, index) => (!index ? { url, date: article.slug } : { url, date: null }))
+  const photos = articles.map(article =>
+    article.smallUrls().reverse().map((url, index) => ({
+      url,
+      date: article.slug,
+      showDate: index === 0,
+      title: article.formatTitle()
+    }))
   ).flat()
 
   return (
@@ -23,10 +26,10 @@ export default async function Page() {
       </div>
 
       <div className="my-8 flex flex-wrap mr-[-2%] md:mr-[-1%]">
-        {photos.map(({ url, date }) => (
+        {photos.map(({ url, date, showDate, title }) => (
           <div key={url} className="w-[18%] md:w-[9%] mr-[2%] mb-[2%] md:mr-[1%] md:mb-[1%]">
-            <p className="text-xs my-[1px] text-gray-500">{date || '　'}</p>
-            <Thumbnail src={url} />
+            <p className="text-xs my-[1px] text-gray-500">{showDate ? date : '　'}</p>
+            <Thumbnail src={url} date={date} title={title} />
           </div>
         ))}
       </div>

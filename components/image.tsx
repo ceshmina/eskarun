@@ -1,12 +1,7 @@
 'use client'
 import React from 'react'
 import Zoom, { UncontrolledProps } from 'react-medium-image-zoom'
-
-const cx = (mods: Record<string, boolean>): string => {
-  const cns: string[] = []
-  Object.keys(mods).forEach(k => mods[k] && cns.push(k))
-  return cns.join(' ')
-}
+import { cx } from '@/core/utils'
 
 export default async function Image({ src, caption }: Readonly<{ src: string, caption: string }>) {
   const CustomZoomContent: UncontrolledProps['ZoomContent'] = ({ buttonUnzoom, modalState, img }) => {
@@ -32,8 +27,6 @@ export default async function Image({ src, caption }: Readonly<{ src: string, ca
         setIsLoaded(false)
       }
     }, [modalState])
-
-    console.log(caption)
     
     return (<>
       {buttonUnzoom}

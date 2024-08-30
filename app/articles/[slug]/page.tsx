@@ -61,6 +61,9 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
           <Link href="/" className="text-blue-500">日記一覧</Link>
         </p>
         <h1 className="text-2xl font-bold">{title}</h1>
+        {article.status === 'draft' && <p className="my-4 text-sm text-red-500">
+          <span className="border-2 border-red-500 px-1 py-0.5 rounded">下書き</span>
+        </p>}
       </div>
     
       <div key={article.slug} className="my-8">

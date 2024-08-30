@@ -7,12 +7,14 @@ import { getCameraName } from '@/core/cameras'
 export class Article {
   readonly slug: string
   readonly title: string | null
+  readonly status: string | null
   readonly location: string
   readonly content: string
 
-  constructor(slug: string, title: string | null, location: string, content: string) {
+  constructor(slug: string, title: string | null, status: string | null, location: string, content: string) {
     this.slug = slug
     this.title = title
+    this.status = status
     this.location = location
     this.content = content
   }
@@ -124,7 +126,13 @@ export const getArticles = async () => {
           continue
         }
         const location = data.location || 'Tokyo, Japan'
-        articles.push(new Article(p.replace('.md', ''), data.title || null, location, content))
+        articles.push(new Article(
+          p.replace('.md', ''),
+          data.title || null,
+          data.status || null,
+          location,
+          content
+        ))
       }
     }
   }

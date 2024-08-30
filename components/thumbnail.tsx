@@ -43,7 +43,7 @@ export default function Thumbnail({ src, date, title }: Readonly<{ src: string, 
   }
   return (
     <Zoom ZoomContent={CustomZoomContent} zoomImg={{ src: src.replace('small', 'medium') }}>
-      <img src={src} className='aspect-square object-cover'/>
+      <img src={src} loading='lazy' className='aspect-square object-cover'/>
     </Zoom>
   )
 }

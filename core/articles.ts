@@ -38,6 +38,11 @@ export class Article {
     return urls
   }
 
+  smallUrls() {
+    const urls = this.imageUrls()
+    return urls.map(url => url.replace('medium', 'small'))
+  }
+
   thumbnailUrls() {
     const urls = this.imageUrls()
     return urls.map(url => url.replace('medium', 'thumbnail'))

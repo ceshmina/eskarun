@@ -2,11 +2,12 @@ import React from 'react'
 import Link from 'next/link'
 import { FaChevronLeft } from 'react-icons/fa6'
 import { getArticles } from '@/core/articles'
+import Thumbnail from '@/components/thumbnail'
 
 export default async function Page() {
   const articles = await getArticles()
   const photos: { url: string, date: string | null }[] = articles.map(article =>
-    article.thumbnailUrls()
+    article.smallUrls()
       .reverse()
       .map((url, index) => (!index ? { url, date: article.slug } : { url, date: null }))
   ).flat()
@@ -25,7 +26,7 @@ export default async function Page() {
         {photos.map(({ url, date }) => (
           <div key={url} className="w-[18%] md:w-[9%] mr-[2%] mb-[2%] md:mr-[1%] md:mb-[1%]">
             <p className="text-xs my-[1px] text-gray-500">{date || '　'}</p>
-            <img src={url}/>
+            <Thumbnail src={url} />
           </div>
         ))}
       </div>

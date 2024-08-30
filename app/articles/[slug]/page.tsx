@@ -77,10 +77,13 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
               <Link href={href} target="_blank" className="text-blue-500">{children}</Link> :
               <span>{children}</span>
             ),
-            img: ({ src, alt }) => (src && <div className="py-4">
-              <Image src={src} caption={cameraCaptions.get(src) || ''} />
-              <p className="text-center text-sm italic text-gray-500">{alt}</p>
-            </div>),
+            img: ({ src, alt, className }) => {
+              const pad = className && !className.indexOf('nopb') ? 'pt-4' : 'py-4'
+              return (src && <div className={pad}>
+                <Image src={src} caption={cameraCaptions.get(src) || ''} />
+                <p className="text-center text-sm italic text-gray-500">{alt}</p>
+              </div>)
+            },
             ul: ({ children }) => <ul className="my-4">{children}</ul>,
             li: ({ children }) => <li className="list-disc my-1 ml-5">{children}</li>,
             pre: ({ children }) => <pre className="my-4 p-4 bg-gray-100">{children}</pre>,
@@ -91,7 +94,8 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
             ),
             hr: () => <hr className="my-12 mx-auto w-72 h-1 bg-gray-300" />,
             blockquote: ({ children }) => <blockquote className="my-8 ml-2 pl-4 border-l-4 border-gray-300">{children}</blockquote>,
-            table: ({ children }) => <table className="table-fixed">{children}</table>
+            table: ({ children }) => <table className="table-fixed">{children}</table>,
+            td: ({ colSpan, children }) => <td colSpan={colSpan || 1} className="text-center text-sm italic text-gray-500">{children}</td>,
           }}
         >{article.content}</Markdown>}
       </div>

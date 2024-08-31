@@ -1,9 +1,12 @@
-const cameraMaster = [
+export const cameraMaster = [
+  { slug: 'ILCE-7M3', name: 'α7 III' },
+  { slug: 'ILCE-7S', name: 'α7S' },
+  { slug: 'DC-GF9', name: 'LUMIX GF9' },
+  { slug: 'E-P7', name: 'PEN E-P7' },
+  { slug: 'NIKON D5600', name: 'D5600' },
   { slug: 'iPhone 12', name: 'iPhone 12' },
   { slug: 'foodie', name: 'iPhone 12' },
   { slug: 'iPhone 15 Pro', name: 'iPhone 15 Pro' },
-  { slug: 'ILCE-7M3', name: 'α7 III' },
-  { slug: 'ILCE-7S', name: 'α7S' },
   { slug: 'FE 16-35mm F4 ZA OSS', name: 'Vario-Tessar T* FE 16-35mm F4 ZA OSS' },
   { slug: 'FE 20-70mm F4 G', name: 'FE 20-70mm F4 G' },
   { slug: 'FE 24-105mm F4 G OSS', name: 'FE 24-105mm F4 G OSS' },
@@ -12,18 +15,15 @@ const cameraMaster = [
   { slug: 'FE 40mm F2.5 G', name: 'FE 40mm F2.5 G' },
   { slug: 'FE 55mm F1.8 ZA', name: 'Sonnar T* FE 55mm F1.8 ZA' },
   { slug: 'FE 90mm F2.8 Macro G OSS', name: 'FE 90mm F2.8 Macro G OSS' },
-  { slug: 'CONTAX Planar T* 50mm F1.4 AE', name: 'CONTAX Planar T* 50mm F1.4 AE' },
-  { slug: 'Utulens 32mm F16', name: 'Utulens 32mm F16' },
-  { slug: 'NIKON D5600', name: 'D5600' },
+  { slug: 'LUMIX G VARIO 12-32/F3.5-5.6', name: 'LUMIX G Vario 12-32mm F3.5-5.6 Asph. Mega O.I.S.' },
+  { slug: 'LUMIX G 25/F1.7', name: 'LUMIX G 25mm F1.7 Asph.' },
+  { slug: 'OLYMPUS M.14-42mm F3.5-5.6 EZ', name: 'M.ZUIKO DIGITAL ED 14-42mm F3.5-5.6 EZ' },
+  { slug: 'OLYMPUS M.40-150mm F4.0-5.6 R', name: 'M.ZUIKO DIGITAL ED 40-150mm F4-5.6 R' },
   { slug: '18.0-55.0 mm f/3.5-5.6', name: 'AF-P DX NIKKOR 18-55mm F3.5-5.6 G VR' },
   { slug: '70.0-300.0 mm f/4.5-6.3', name: 'AF-P DX NIKKOR 70-300mm F4.5-6.3 G ED VR' },
   { slug: '35.0 mm f/1.8', name: 'AF-S DX NIKKOR 35mm F1.8 G' },
-  { slug: 'DC-GF9', name: 'LUMIX GF9' },
-  { slug: 'LUMIX G VARIO 12-32/F3.5-5.6', name: 'LUMIX G Vario 12-32mm F3.5-5.6 Asph. Mega O.I.S.' },
-  { slug: 'LUMIX G 25/F1.7', name: 'LUMIX G 25mm F1.7 Asph.' },
-  { slug: 'E-P7', name: 'PEN E-P7' },
-  { slug: 'OLYMPUS M.14-42mm F3.5-5.6 EZ', name: 'M.ZUIKO DIGITAL ED 14-42mm F3.5-5.6 EZ' },
-  { slug: 'OLYMPUS M.40-150mm F4.0-5.6 R', name: 'M.ZUIKO DIGITAL ED 40-150mm F4-5.6 R' }
+  { slug: 'CONTAX Planar T* 50mm F1.4 AE', name: 'CONTAX Planar T* 50mm F1.4 AE' },
+  { slug: 'Utulens 32mm F16', name: 'Utulens 32mm F16' }
 ]
 
 export const getCameraName = (slug: string) => {

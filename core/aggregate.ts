@@ -1,4 +1,5 @@
 import { getArticles } from '@/core/articles'
+import { cameraMaster } from '@/core/cameras'
 
 export const aggArticlesByMonth = async () => {
   const articles = await getArticles()
@@ -23,9 +24,8 @@ export const aggArticlesByCamera = async () => {
       })
     })
   )
-  return Array.from(agg.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([camera, count]) => ({ camera, count }))
+  const master = Array.from(new Set(cameraMaster.map(camera => camera.name)))
+  return master.map(camera => ({ camera, count: agg.get(camera) || 0 }))
 }
 
 export const aggArticlesByLocation = async () => {

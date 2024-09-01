@@ -7,7 +7,7 @@ export default async function Navigation() {
   const articlesByCamera = await aggArticlesByCamera()
   const articlesByLocation = await aggArticlesByLocation()
   return (
-    <div className="hidden-scrollbar">
+    <div>
       <div>
         <h2 className="text-lg font-bold">月別</h2>
         <ul className="my-4">

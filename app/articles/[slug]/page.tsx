@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { FaCamera } from 'react-icons/fa'
 import { FaChevronLeft, FaChevronRight, FaLocationDot } from 'react-icons/fa6'
 import Markdown from 'react-markdown'
-import rehypeHighlight from 'rehype-highlight'
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlight'
+import { github } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
@@ -69,7 +70,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
       <div key={article.slug} className="my-8">
         {<Markdown
           remarkPlugins={[remarkGfm, remarkMath]}
-          rehypePlugins={[rehypeHighlight, rehypeKatex, rehypeRaw]}
+          rehypePlugins={[rehypeKatex, rehypeRaw]}
           components={{
             p: ({ children }) => (
               hasOnlyImage(children) ? children as React.ReactElement :
@@ -90,11 +91,20 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
             ul: ({ children }) => <ul className="my-4 mx-4 md:mx-0">{children}</ul>,
             li: ({ children }) => <li className="list-disc my-1 ml-5">{children}</li>,
             pre: ({ children }) => <pre className="my-4 p-4 bg-gray-100">{children}</pre>,
-            code: ({ className, children }) => (
-              className ?  // pre内の場合、rehye-highlightによってclassNameが付与される
-              <code className={codeFont.className}>{children}</code> :
-              <code className={`${codeFont.className} bg-gray-100 mx-1 p-1`}>{children}</code>
-            ),
+            code: ({ className, children }) => {
+              const lang = className && className.split('-')[1]
+              return className ?
+                <div className="relative">
+                  {lang && <p className="absolute right-0 top-[-8px] text-xs text-gray-500 text-right">{lang}</p>}
+                  <SyntaxHighlighter
+                    language={lang} style={github} className={codeFont.className}
+                    customStyle={{ background: 'inherit', padding: 0 }}
+                  >
+                    {String(children)}
+                  </SyntaxHighlighter> 
+                </div>:
+                <code className={`${codeFont.className} bg-gray-100 mx-0.5 px-1.5 py-0.5`}>{children}</code>
+            },
             hr: () => <hr className="my-12 mx-auto w-72 h-1 bg-gray-300" />,
             blockquote: ({ children }) => <blockquote className="my-8 ml-6 md:ml-2 mr-4 md:mr-0 pl-1 md:pl-4 border-l-4 border-gray-300">{children}</blockquote>,
             table: ({ children }) => <table className="table-fixed ml-[-1px] mr-[-1px]">{children}</table>,

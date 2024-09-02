@@ -82,10 +82,13 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
               <span>{children}</span>
             ),
             img: ({ src, alt, className }) => {
-              const pad = className && !className.indexOf('nopb') ? 'pt-4' : 'py-4'
+              const isCaption = className && !className.indexOf('caption')
+              const isTop = className && !className.indexOf('top')
+              const isBottom = className && !className.indexOf('bottom')
+              const pad = isCaption ? 'pt-4 pb-2' : isTop ? 'pt-4' : isBottom ? 'pb-4' : 'py-4'
               return (src && <div className={pad}>
                 <Image src={src} caption={cameraCaptions.get(src) || ''} />
-                <p className="text-center text-sm italic text-gray-500 mx-4">{alt}</p>
+                {alt && <p className={`text-center text-sm italic text-gray-500 my-2 mx-4`}>{alt}</p>}
               </div>)
             },
             ul: ({ children }) => <ul className="my-4 mx-4 md:mx-0">{children}</ul>,

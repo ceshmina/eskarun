@@ -40,6 +40,6 @@ export default async function Image({ src, caption }: Readonly<{ src: string, ca
   }
 
   return (<Zoom ZoomContent={CustomZoomContent}>
-    <img src={src} className="mb-2" />
+    <img src={src} />
   </Zoom>)
 }

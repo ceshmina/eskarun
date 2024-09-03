@@ -53,15 +53,20 @@ export class Article {
     const exifUrls = urls.map(url => url.replace('medium', 'exif').replace('.webp', '.json'))
     const exifs = (await Promise.all(
       exifUrls.map(url => fetch(url).then(res => res.json()))
-    )).map(exif => ({
-      model: getCameraName(exif.Model),
-      lens: getCameraName(exif.LensModel),
-      focalLength: exif.FocalLength || null,
-      focalLength35: exif.FocalLengthIn35mmFilm || null,
-      fNumber: exif.FNumber || null,
-      shutterSpeed: exif.ExposureTime || null,
-      iso: exif.ISOSpeedRatings || null
-    }))
+    )).map(exif => {
+      const scene = exif.SceneCaptureType
+      return {
+        model: getCameraName(exif.Model),
+        lens: getCameraName(exif.LensModel),
+        focalLength: exif.FocalLength || null,
+        focalLength35: exif.FocalLengthIn35mmFilm || null,
+        fNumber: exif.FNumber || null,
+        shutterSpeed: exif.ExposureTime || null,
+        iso: exif.ISOSpeedRatings || null,
+        // 数値の0が入ることがあるため、undefinedと区別する
+        scene: scene !== undefined ? scene : null
+      }
+    })
     return new Map(urls.map((url, i) => [url, exifs[i]]))
   }
 
@@ -90,8 +95,13 @@ export class Article {
         } else {
           captions2.push(`${exif.focalLength}mm`)
         }
-      } else if (!model.indexOf('iPhone') && exif.focalLength35) {
-        captions2.push(`${exif.focalLength35}mm`)
+      } else if (!model.indexOf('iPhone')) {
+        if (exif.focalLength35) {
+          captions2.push(`${exif.focalLength35}mm`)
+        }
+        if (exif.scene === 0) {
+          captions2.push('portrait mode')
+        }
       }
       if (model.indexOf('iPhone')) {
         if (exif.fNumber) {

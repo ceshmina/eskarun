@@ -82,10 +82,15 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
               <span>{children}</span>
             ),
             img: ({ src, alt, className }) => {
+              const isBottomCaption = className && !className.indexOf('bottom-caption')
               const isCaption = className && !className.indexOf('caption')
               const isTop = className && !className.indexOf('top')
               const isBottom = className && !className.indexOf('bottom')
-              const pad = isCaption ? 'pt-4 pb-2' : isTop ? 'pt-4' : isBottom ? 'pb-4' : 'py-4'
+              const pad = isBottomCaption ? 'pb-2' :
+                isCaption ? 'pt-4 pb-2' :
+                isTop ? 'pt-4' :
+                isBottom ? 'pb-4' :
+                'py-4'
               return (src && <div className={pad}>
                 <Image src={src} caption={cameraCaptions.get(src) || ''} />
                 {alt && <p className={`text-center text-sm italic text-gray-500 my-2 mx-4`}>{alt}</p>}
@@ -111,7 +116,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
             hr: () => <hr className="my-12 mx-auto w-72 h-1 bg-gray-300" />,
             blockquote: ({ children }) => <blockquote className="my-8 ml-6 md:ml-2 mr-4 md:mr-0 pl-1 md:pl-4 border-l-4 border-gray-300">{children}</blockquote>,
             table: ({ children }) => <table className="table-fixed ml-[-1px] mr-[-1px]">{children}</table>,
-            td: ({ colSpan, children }) => <td colSpan={colSpan || 1} className="text-center text-sm italic text-gray-500">{children}</td>,
+            td: ({ colSpan, children }) => <td colSpan={colSpan || 1} className={`text-center text-sm italic text-gray-500 ${colSpan && 'px-4 pb-4'}`}>{children}</td>,
           }}
         >{article.content}</Markdown>}
       </div>

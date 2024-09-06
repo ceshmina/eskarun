@@ -1,4 +1,5 @@
 export const cameraMaster = [
+  { slug: 'ILCE-7RM5', name: 'α7R V' },
   { slug: 'ILCE-7M3', name: 'α7 III' },
   { slug: 'ILCE-7S', name: 'α7S' },
   { slug: 'DC-GF9', name: 'LUMIX GF9' },
@@ -9,6 +10,7 @@ export const cameraMaster = [
   { slug: 'iPhone 15 Pro', name: 'iPhone 15 Pro' },
   { slug: 'FE 16-35mm F4 ZA OSS', name: 'Vario-Tessar T* FE 16-35mm F4 ZA OSS' },
   { slug: 'FE 20-70mm F4 G', name: 'FE 20-70mm F4 G' },
+  { slug: 'FE 24-70mm F2.8 GM II', name: 'FE 24-70mm F2.8 GM II' },
   { slug: 'FE 24-105mm F4 G OSS', name: 'FE 24-105mm F4 G OSS' },
   { slug: 'FE 70-300mm F4.5-5.6 G OSS', name: 'FE 70-300mm F4.5-5.6 G OSS' },
   { slug: 'FE 24mm F2.8 G', name: 'FE 24mm F2.8 G' },
@@ -19,10 +21,12 @@ export const cameraMaster = [
   { slug: 'LUMIX G 25/F1.7', name: 'LUMIX G 25mm F1.7 Asph.' },
   { slug: 'OLYMPUS M.14-42mm F3.5-5.6 EZ', name: 'M.ZUIKO DIGITAL ED 14-42mm F3.5-5.6 EZ' },
   { slug: 'OLYMPUS M.40-150mm F4.0-5.6 R', name: 'M.ZUIKO DIGITAL ED 40-150mm F4-5.6 R' },
+  { slug: 'OLYMPUS M.17mm F2.8', name: 'M.ZUIKO DIGITAL 17mm F2.8' },
   { slug: '18.0-55.0 mm f/3.5-5.6', name: 'AF-P DX NIKKOR 18-55mm F3.5-5.6 G VR' },
   { slug: '70.0-300.0 mm f/4.5-6.3', name: 'AF-P DX NIKKOR 70-300mm F4.5-6.3 G ED VR' },
   { slug: '35.0 mm f/1.8', name: 'AF-S DX NIKKOR 35mm F1.8 G' },
   { slug: 'CONTAX Planar T* 50mm F1.4 AE', name: 'CONTAX Planar T* 50mm F1.4 AE' },
+  { slug: 'MC Tele ROKKOR-PF 135mm F2.8', name: 'MC Tele ROKKOR-PF 135mm F2.8' },
   { slug: 'Utulens 32mm F16', name: 'Utulens 32mm F16' }
 ]
 

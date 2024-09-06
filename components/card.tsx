@@ -6,13 +6,20 @@ export default function ArticleCard({ article }: Readonly<{ article: Article }>)
   const title = article.formatTitle()
   const thumbnailUrls = article.thumbnailUrls()
 
+  const plainText = content.replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/<[^>]*>.*?<\/[^>]*>/g, '')  // htmlタグを中身ごと削除
+    .replace(/<[^>]*>/g, '')  // 残ったタグを削除
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+    .replace(/[*_~`]{1,2}/g, '')
+    .replace('---', '')
+
   return (
     <div key={slug} className="my-8">
       <h2 className="my-2 text-lg font-bold">
         <Link href={`/articles/${slug}`} className="text-blue-500">{title}</Link>
       </h2>
       <p className="my-2 text-sm font-light line-clamp-3">
-        {content}
+        {plainText}
       </p>
       <div className="flex flex-wrap mr-[-2%] md:mr-[-1%]">
         {thumbnailUrls.map((url) => (

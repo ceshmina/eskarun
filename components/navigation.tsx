@@ -21,22 +21,22 @@ export default async function Navigation() {
       </div>
 
       <div className="mt-12">
-        <h2 className="text-lg font-bold">撮影機材別</h2>
+        <h2 className="text-lg font-bold">場所別</h2>
         <ul className="my-4">
-          {articlesByCamera.map(({ camera, count }) => {
-            return (<li key={camera} className="my-1 text-sm font-normal">
-              <Link href={`/cameras/${camera}`} className="text-blue-300">{decodeURIComponent(camera)} ({count})</Link>
+          {articlesByLocation.map(({ location, count }) => {
+            return (<li key={location} className="my-1 text-sm font-normal">
+              <Link href={`/locations/${location}`} className="text-blue-300">{location} ({count})</Link>
             </li>)
           })}
         </ul>
       </div>
 
       <div className="mt-12">
-        <h2 className="text-lg font-bold">場所別</h2>
+        <h2 className="text-lg font-bold">撮影機材別</h2>
         <ul className="my-4">
-          {articlesByLocation.map(({ location, count }) => {
-            return (<li key={location} className="my-1 text-sm font-normal">
-              <Link href={`/locations/${location}`} className="text-blue-300">{location} ({count})</Link>
+          {articlesByCamera.map(({ camera, count }) => {
+            return (<li key={camera} className="my-1 text-sm font-normal">
+              <Link href={`/cameras/${camera}`} className="text-blue-300">{decodeURIComponent(camera)} ({count})</Link>
             </li>)
           })}
         </ul>

@@ -36,7 +36,7 @@ export default async function Navigation() {
         <ul className="my-4">
           {articlesByCamera.map(({ camera, count }) => {
             return (<li key={camera} className="my-1 text-sm font-normal">
-              <Link href={`/cameras/${camera}`} className="text-blue-300">{decodeURIComponent(camera)} ({count})</Link>
+              <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
             </li>)
           })}
         </ul>

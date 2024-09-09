@@ -182,7 +182,7 @@ export const getArticlesByMonth = async (month: string) => {
 export const getArticlesByCamera = async (camera: string) => {
   const articles = await getArticles()
   const filter = await Promise.all(
-    articles.map(article => article.uniqueCameras().then(cameras => cameras.includes(camera.replaceAll('/', '%2F'))))
+    articles.map(article => article.uniqueCameras().then(cameras => cameras.includes(camera)))
   )
   return articles.filter((_, i) => filter[i])
 }

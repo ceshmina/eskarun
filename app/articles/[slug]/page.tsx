@@ -30,7 +30,7 @@ function ArticleLink({ article }: Readonly<{ article: Article }>) {
 function CameraLink({ camera }: Readonly<{ camera: string }>) {
   return (
     <span className="mr-2 mt-2 px-1 inline-block text-blue-500 border-[1px] border-gray-300 rounded">
-      <Link href={`/cameras/${camera}`}>{decodeURIComponent(camera)}</Link>
+      <Link href={`/cameras/${camera}`}>{camera}</Link>
     </span>
   )
 }

@@ -12,6 +12,7 @@ export const cameraMaster = [
   { slug: 'FE 20-70mm F4 G', name: 'FE 20-70mm F4 G' },
   { slug: 'FE 24-70mm F2.8 GM II', name: 'FE 24-70mm F2.8 GM II' },
   { slug: 'FE 24-105mm F4 G OSS', name: 'FE 24-105mm F4 G OSS' },
+  { slug: 'FE 70-200mm F2.8 GM OSS II', name: 'FE 70-200mm F2.8 GM OSS II' },
   { slug: 'FE 70-300mm F4.5-5.6 G OSS', name: 'FE 70-300mm F4.5-5.6 G OSS' },
   { slug: 'FE 24mm F2.8 G', name: 'FE 24mm F2.8 G' },
   { slug: 'FE 40mm F2.5 G', name: 'FE 40mm F2.5 G' },

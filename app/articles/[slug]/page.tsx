@@ -85,10 +85,12 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
               const isBottomCaption = className && !className.indexOf('bottom-caption')
               const isCaption = className && !className.indexOf('caption')
               const isTop = className && !className.indexOf('top')
+              const isMiddle = className && !className.indexOf('middle')
               const isBottom = className && !className.indexOf('bottom')
               const pad = isBottomCaption ? 'pb-2' :
                 isCaption ? 'pt-4 pb-2' :
                 isTop ? 'pt-4' :
+                isMiddle ? 'py-0' :
                 isBottom ? 'pb-4' :
                 'py-4'
               return (src && <div className={pad}>

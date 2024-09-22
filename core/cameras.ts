@@ -23,6 +23,7 @@ export const cameraMaster = [
   { slug: 'OLYMPUS M.14-42mm F3.5-5.6 EZ', name: 'M.ZUIKO DIGITAL ED 14-42mm F3.5-5.6 EZ' },
   { slug: 'OLYMPUS M.40-150mm F4.0-5.6 R', name: 'M.ZUIKO DIGITAL ED 40-150mm F4.0-5.6 R' },
   { slug: 'OLYMPUS M.17mm F2.8', name: 'M.ZUIKO DIGITAL 17mm F2.8' },
+  { slug: 'Super-Takumar 28mm F3.5', name: 'Super-Takumar 28mm F3.5' },
   { slug: '18.0-55.0 mm f/3.5-5.6', name: 'AF-P DX NIKKOR 18-55mm f/3.5-5.6G VR' },
   { slug: '70.0-300.0 mm f/4.5-6.3', name: 'AF-P DX NIKKOR 70-300mm f/4.5-6.3G ED VR' },
   { slug: '35.0 mm f/1.8', name: 'AF-S DX NIKKOR 35mm f/1.8G' },

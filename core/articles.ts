@@ -163,6 +163,12 @@ export const getArticleWithNexts = async (slug: string) => {
   return { article: articles[index], next, prev }
 }
 
+export const getArticlesOfSameDate = async (slug: string) => {
+  const articles = await getArticles()
+  return articles.filter(article => 
+    article.slug.slice(0, 4) !== slug.slice(0, 4) && article.slug.slice(4, 8) === slug.slice(4, 8))
+}
+
 export const getArticlesByMonth = async (month: string) => {
   const articles = await getArticles()
   const articlesByMonth = articles

@@ -9,8 +9,9 @@ import rehypeKatex from 'rehype-katex'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
-import { Article, getArticles, getArticleWithNexts} from '@/core/articles'
+import { Article, getArticles, getArticleWithNexts, getArticlesOfSameDate } from '@/core/articles'
 import { codeFont } from '@/core/config'
+import ArticleCard from '@/components/card'
 import Image from '@/components/image'
 import 'katex/dist/katex.min.css'
 
@@ -53,6 +54,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
   const title = article.formatTitle()
   const uniqueCameras = await article.uniqueCameras()
   const cameraCaptions = await article.cameraCaptions()
+  const articlesOfSameDate = await getArticlesOfSameDate(slug)
 
   return (
     <main className="max-w-screen-md mx-auto px-0 md:px-4 py-4">
@@ -148,6 +150,13 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
             <FaChevronRight className="inline-block pb-1" />
           </p>
         </div> : <div />}
+      </div>
+
+      <div className="my-16 mx-4 md:mx-0">
+        <h2 className="text-lg font-bold">同じ日付の日記</h2>
+        {articlesOfSameDate.map((article) => (
+          <ArticleCard key={article.slug} article={article} />
+        ))}
       </div>
     </main>
   )

@@ -29,6 +29,7 @@ export const cameraMaster = [
   { slug: '70.0-300.0 mm f/4.5-6.3', name: 'AF-P DX NIKKOR 70-300mm f/4.5-6.3G ED VR' },
   { slug: '35.0 mm f/1.8', name: 'AF-S DX NIKKOR 35mm f/1.8G' },
   { slug: 'CONTAX Planar T* 50mm F1.4 AE', name: 'CONTAX Planar T* 50mm F1.4 AE' },
+  { slug: 'Auto ROKKOR-PF 58mm F1.4', name: 'AUTO ROKKOR-PF 58mm F1.4' },
   { slug: 'MC Tele ROKKOR-PF 135mm F2.8', name: 'MC TELE ROKKOR-PF 135mm F2.8' },
   { slug: 'Utulens 32mm F16', name: 'Utulens 32mm F16' }
 ]

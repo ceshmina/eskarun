@@ -34,8 +34,20 @@ export const aggArticlesByCamera = async () => {
       })
     })
   )
-  const master = Array.from(new Set(cameraMaster.map(camera => camera.name)))
-  return master.map(camera => ({ camera, count: agg.get(camera) || 0 }))
+  const own = Array.from(new Set(cameraMaster
+    .filter(camera => camera.type == 'own')
+    .map(camera => camera.name)))
+  const release = Array.from(new Set(cameraMaster
+    .filter(camera => camera.type == 'release')
+    .map(camera => camera.name)))
+  const old = Array.from(new Set(cameraMaster
+    .filter(camera => camera.type == 'old')
+    .map(camera => camera.name)))
+  return {
+    own: own.map(camera => ({ camera, count: agg.get(camera) || 0 })),
+    release: release.map(camera => ({ camera, count: agg.get(camera) || 0 })),
+    old: old.map(camera => ({ camera, count: agg.get(camera) || 0 }))
+  }
 }
 
 export const aggArticlesByLocation = async () => {

@@ -8,7 +8,9 @@ import ArticleCard from '@/components/card'
 
 export async function generateStaticParams() {
   const agg = await aggArticlesByMonth()
-  return agg.map(({ month }) => ({ slug: month }))
+  return agg.map(({ months }) => (
+    months.map(({ month }) => ({ slug: month })
+  ))).flat()
 }
 
 function MonthLink({ slug }: Readonly<{ slug: string }>) {

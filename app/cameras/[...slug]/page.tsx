@@ -7,7 +7,9 @@ import ArticleCard from '@/components/card'
 
 export async function generateStaticParams() {
   const agg = await aggArticlesByCamera()
-  return agg.map(({ camera }) => ({ slug: camera.split('/') }))
+  return agg.own.map(({ camera }) => ({ slug: camera.split('/') }))
+    .concat(agg.release.map(({ camera }) => ({ slug: camera.split('/') })))
+    .concat(agg.old.map(({ camera }) => ({ slug: camera.split('/') })))
 }
 
 export default async function Page({ params }: Readonly<{ params: { slug: string[] } }>) {
@@ -15,10 +17,6 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
   const camera = slug.map(s => decodeURIComponent(s)).join('/')
   const articles = await getArticlesByCamera(camera)
   const count = articles.length
-
-  // debug
-  const agg = await aggArticlesByCamera()
-  console.log(agg.map(({ camera }) => ({ slug: camera.split('/') })))
 
   return (
     <main className="max-w-screen-md mx-auto p-4">

@@ -7,6 +7,7 @@ export const cameraMaster = [
   // E lens
   { type: 'own', slug: 'FE 24-70mm F2.8 GM II', name: 'FE 24-70mm F2.8 GM II' },
   { type: 'own', slug: 'FE 70-200mm F2.8 GM OSS II', name: 'FE 70-200mm F2.8 GM OSS II' },
+  { type: 'own', slug: 'E 28-200mm F2.8-5.6 A071', name: '28-200mm F/2.8-5.6 Di III RXD' },
 
   // 手放したカメラ・レンズ
   // E body

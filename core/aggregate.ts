@@ -3,14 +3,24 @@ import { cameraMaster } from '@/core/cameras'
 
 export const aggArticlesByMonth = async () => {
   const articles = await getArticles()
-  const agg = new Map<string, number>()
+  const agg = new Map<string, Map<string, number>>()
   articles.forEach(article => {
+    const year = article.year
     const month = article.month
-    agg.set(month, (agg.get(month) || 0) + 1)
+    if (!agg.has(year)) {
+      agg.set(year, new Map<string, number>())
+    }
+    const map = agg.get(year)!
+    map.set(month, (map.get(month) || 0) + 1)
   })
   return Array.from(agg.entries())
     .sort(([a], [b]) => b.localeCompare(a))
-    .map(([month, count]) => ({ month, count }))
+    .map(([year, map]) => ({
+      year,
+      months: Array.from(map.entries())
+        .sort(([a], [b]) => b.localeCompare(a))
+        .map(([month, count]) => ({ month, count }))
+    }))
 }
 
 export const aggArticlesByCamera = async () => {

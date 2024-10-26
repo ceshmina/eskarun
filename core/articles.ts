@@ -19,6 +19,10 @@ export class Article {
     this.content = content
   }
 
+  get year() {
+    return this.slug.slice(0, 4)
+  }
+
   get month() {
     return this.slug.slice(0, 6)
   }

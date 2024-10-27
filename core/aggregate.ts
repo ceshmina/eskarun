@@ -52,12 +52,22 @@ export const aggArticlesByCamera = async () => {
 
 export const aggArticlesByLocation = async () => {
   const articles = await getArticles()
-  const agg = new Map<string, number>()
+  const aggJapan = new Map<string, number>()
+  const aggOther = new Map<string, number>()
   articles.forEach(article => {
     const location = article.location
-    agg.set(location, (agg.get(location) || 0) + 1)
+    if (location.includes('Japan')) {
+      aggJapan.set(location, (aggJapan.get(location) || 0) + 1)
+    } else {
+      aggOther.set(location, (aggOther.get(location) || 0) + 1)
+    }
   })
-  return Array.from(agg.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([location, count]) => ({ location, count }))
+  return {
+    japan: Array.from(aggJapan.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([location, count]) => ({ location, count })),
+    other: Array.from(aggOther.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([location, count]) => ({ location, count }))
+  }
 }

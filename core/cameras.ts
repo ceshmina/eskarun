@@ -46,7 +46,7 @@ export const cameraMaster = [
   { type: 'old', slug: 'Super-Takumar 28mm F3.5', name: 'Super-Takumar 28mm F3.5' },
   { type: 'old', slug: 'Super-Takumar 55mm F1.8', name: 'Super-Takumar 55mm F1.8' },
   // L39
-  { type: 'old', slug: 'Utulens 32mm F16', name: 'Utulens 32mm F16' },
+  { type: 'old', slug: 'Utulens 32mm F16', name: 'Utulens' },
   // CY
   { type: 'old', slug: 'CONTAX Planar T* 50mm F1.4 AE', name: 'CONTAX Planar T* 50mm F1.4 AE' },
   // SR

@@ -6,8 +6,9 @@ import { getArticlesByLocation } from '@/core/articles'
 import ArticleCard from '@/components/card'
 
 export async function generateStaticParams() {
-  const agg = await aggArticlesByLocation()
-  return agg.map(({ location }) => ({ slug: location }))
+  const { japan, other } = await aggArticlesByLocation()
+  return japan.map(({ location }) => ({ slug: location }))
+    .concat(other.map(({ location }) => ({ slug: location })))
 }
 
 export default async function Page({ params }: Readonly<{ params: { slug: string } }>) {

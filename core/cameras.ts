@@ -2,6 +2,7 @@ export const cameraMaster = [
   // 所持中
   // E body
   { type: 'own', slug: 'ILCE-7RM5', name: 'α7R V' },
+  { type: 'own', slug: 'ILCE-7CM2', name: 'α7C II' },
   // compact
   { type: 'own', slug: 'iPhone 15 Pro', name: 'iPhone 15 Pro' },
   // E lens

@@ -14,14 +14,14 @@ export const cameraMaster = [
   // E body
   { type: 'release', slug: 'ILCE-7M3', name: 'α7 III' },
   { type: 'release', slug: 'ILCE-7S', name: 'α7S' },
+  // F body
+  { type: 'release', slug: 'NIKON D5600', name: 'D5600' },
   // MFT body
   { type: 'release', slug: 'DC-GF9', name: 'LUMIX GF9' },
   { type: 'release', slug: 'E-P7', name: 'PEN E-P7' },
   // compact
   { type: 'release', slug: 'iPhone 12', name: 'iPhone 12' },
   { type: 'release', slug: 'foodie', name: 'iPhone 12' },
-  // F body
-  { type: 'release', slug: 'NIKON D5600', name: 'D5600' },
   // E lens
   { type: 'release', slug: 'FE 16-35mm F4 ZA OSS', name: 'Vario-Tessar T* FE 16-35mm F4 ZA OSS' },
   { type: 'release', slug: 'FE 20-70mm F4 G', name: 'FE 20-70mm F4 G' },
@@ -31,16 +31,16 @@ export const cameraMaster = [
   { type: 'release', slug: 'FE 40mm F2.5 G', name: 'FE 40mm F2.5 G' },
   { type: 'release', slug: 'FE 55mm F1.8 ZA', name: 'Sonnar T* FE 55mm F1.8 ZA' },
   { type: 'release', slug: 'FE 90mm F2.8 Macro G OSS', name: 'FE 90mm F2.8 Macro G OSS' },
+  // F lens
+  { type: 'release', slug: '18.0-55.0 mm f/3.5-5.6', name: 'AF-P DX NIKKOR 18-55mm f/3.5-5.6G VR' },
+  { type: 'release', slug: '70.0-300.0 mm f/4.5-6.3', name: 'AF-P DX NIKKOR 70-300mm f/4.5-6.3G ED VR' },
+  { type: 'release', slug: '35.0 mm f/1.8', name: 'AF-S DX NIKKOR 35mm f/1.8G' },
   // MFT lens
   { type: 'release', slug: 'LUMIX G VARIO 12-32/F3.5-5.6', name: 'LUMIX G VARIO 12-32mm/F3.5-5.6 ASPH./MEGA O.I.S.' },
   { type: 'release', slug: 'LUMIX G 25/F1.7', name: 'LUMIX G 25mm/F1.7 ASPH.' },
   { type: 'release', slug: 'OLYMPUS M.14-42mm F3.5-5.6 EZ', name: 'M.ZUIKO DIGITAL ED 14-42mm F3.5-5.6 EZ' },
   { type: 'release', slug: 'OLYMPUS M.40-150mm F4.0-5.6 R', name: 'M.ZUIKO DIGITAL ED 40-150mm F4.0-5.6 R' },
   { type: 'release', slug: 'OLYMPUS M.17mm F2.8', name: 'M.ZUIKO DIGITAL 17mm F2.8' },
-  // F lens
-  { type: 'release', slug: '18.0-55.0 mm f/3.5-5.6', name: 'AF-P DX NIKKOR 18-55mm f/3.5-5.6G VR' },
-  { type: 'release', slug: '70.0-300.0 mm f/4.5-6.3', name: 'AF-P DX NIKKOR 70-300mm f/4.5-6.3G ED VR' },
-  { type: 'release', slug: '35.0 mm f/1.8', name: 'AF-S DX NIKKOR 35mm f/1.8G' },
 
   // オールドレンズ他
   // M42

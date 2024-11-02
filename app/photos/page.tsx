@@ -23,6 +23,7 @@ export default async function Page() {
           <Link href="/" className="text-blue-500">日記一覧</Link>
         </p>
         <h1 className="text-2xl font-bold">すべての写真</h1>
+        <p className="my-2 text-base font-normal">2024年11月〜</p>
       </div>
 
       <div className="my-8 flex flex-wrap mr-[-2%] md:mr-[-1%]">

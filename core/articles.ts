@@ -44,7 +44,11 @@ export class Article {
 
   smallUrls() {
     const urls = this.imageUrls()
-    return urls.map(url => url.replace('medium', 'small'))
+    if (this.slug >= '20241101' && this.slug !== '20991231') {
+      return urls.map(url => url.replace('medium', 'thumbnail'))
+    } else {
+      return []  // urls.map(url => url.replace('medium', 'small'))
+    }
   }
 
   thumbnailUrls() {

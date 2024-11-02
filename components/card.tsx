@@ -23,7 +23,7 @@ export default function ArticleCard({ article }: Readonly<{ article: Article }>)
       </p>
       <div className="flex flex-wrap mr-[-2%] md:mr-[-1%]">
         {thumbnailUrls.map((url) => (
-          <img key={url} src={url} className="w-[18%] md:w-[9%] mr-[2%] mb-[2%] md:mr-[1%] md:mb-[1%]" />
+          <img key={url} src={url} className="w-[18%] md:w-[9%] mr-[2%] mb-[2%] md:mr-[1%] md:mb-[1%] aspect-square object-cover" />
         ))}
       </div>
     </div>

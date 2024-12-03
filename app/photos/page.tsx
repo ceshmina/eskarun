@@ -20,7 +20,7 @@ export default async function Page() {
       <div className="my-4">
         <p className="text-base font-normal">
           <FaChevronLeft className="inline-block pb-1" />
-          <Link href="/" className="text-blue-500">日記一覧</Link>
+          <Link href="/" className="text-blue-500">HOME</Link>
         </p>
         <h1 className="text-2xl font-bold">すべての写真</h1>
         <p className="my-2 text-base font-normal">2024年11月〜</p>

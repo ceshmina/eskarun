@@ -21,7 +21,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
       <div className="my-4">
         <p className="text-base font-normal">
           <FaChevronLeft className="inline-block pb-1" />
-          <Link href="/" className="text-blue-500">日記一覧</Link>
+          <Link href="/" className="text-blue-500">HOME</Link>
         </p>
         <h1 className="text-2xl font-bold">場所: {location} の日記一覧 ({count}件)</h1>
       </div>

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { aggArticlesByMonth, aggArticlesByCamera, aggArticlesByLocation } from '@/core/aggregate'
 import Year from '@/components/navigation/year'
+import Camera from '@/components/navigation/camera'
 
 export default async function Navigation() {
   const articlesByMonth = await aggArticlesByMonth()
@@ -45,38 +46,11 @@ export default async function Navigation() {
 
       <div className="mt-12">
         <h2 className="text-lg font-bold">撮影機材別</h2>
-        <ul className="my-4">
-          <li className="my-1 text-sm font-bold">
-            所持中
-            <ul className="mt-2 mb-4 ml-4">
-              {articlesByCamera.own.map(({ camera, count }) => {
-                return (<li key={camera} className="my-1 text-sm font-normal">
-                  <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
-                </li>)
-              })}
-            </ul>
-          </li>
-          <li className="my-1 text-sm font-bold">
-            手放したカメラ・レンズ
-            <ul className="mt-2 mb-4 ml-4">
-              {articlesByCamera.release.map(({ camera, count }) => {
-                return (<li key={camera} className="my-1 text-sm font-normal">
-                  <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
-                </li>)
-              })}
-            </ul>
-          </li>
-          <li className="my-1 text-sm font-bold">
-            オールドレンズ他
-            <ul className="mt-2 mb-4 ml-4">
-              {articlesByCamera.old.map(({ camera, count }) => {
-                return (<li key={camera} className="my-1 text-sm font-normal">
-                  <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
-                </li>)
-              })}
-            </ul>
-          </li>
-        </ul>
+        <div className="my-4">
+          <Camera title="所持中" cameras={articlesByCamera.own} isFirstOpen={true} />
+          <Camera title="手放したカメラ・レンズ" cameras={articlesByCamera.release} isFirstOpen={false} />
+          <Camera title="オールドレンズ他" cameras={articlesByCamera.old} isFirstOpen={false} />
+        </div>
       </div>
 
       <div className="mt-12 mb-16">

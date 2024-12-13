@@ -7,13 +7,14 @@ import { parse, format } from 'date-fns'
 type Props = Readonly<{
   year: string
   months: ReadonlyArray<{ month: string, count: number }>
+  showOrder?: number
 }>
 
-export default function Year({ year, months }: Props) {
+export default function Year({ year, months, showOrder }: Props) {
   const formatYear = format(parse(year, 'yyyy', new Date()), 'yyyy年')
   const countSum = months.reduce((acc, { count }) => acc + count, 0)
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(!showOrder)
   const toggleOpen = (event: MouseEvent) => {
     event.stopPropagation()
     setIsOpen(!isOpen)

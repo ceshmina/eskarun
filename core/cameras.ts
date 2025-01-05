@@ -5,6 +5,7 @@ export const cameraMaster = [
   { type: 'own', slug: 'ILCE-7CM2', name: 'α7C II' },
   // compact
   { type: 'own', slug: 'iPhone 15 Pro', name: 'iPhone 15 Pro' },
+  { type: 'own', slug: 'RICOH GR III', name: 'GR III' },
   { type: 'own', slug: 'RICOH GR IIIx', name: 'GR IIIx' },
   // E lens
   { type: 'own', slug: 'FE 24-70mm F2.8 GM II', name: 'FE 24-70mm F2.8 GM II' },

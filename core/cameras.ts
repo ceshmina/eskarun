@@ -5,12 +5,11 @@ export const cameraMaster = [
   { type: 'own', slug: 'ILCE-7CM2', name: 'α7C II' },
   // compact
   { type: 'own', slug: 'iPhone 15 Pro', name: 'iPhone 15 Pro' },
+  { type: 'own', slug: 'LEICA D-Lux 8', name: 'D-LUX 8' },
   { type: 'own', slug: 'RICOH GR III', name: 'GR III' },
   { type: 'own', slug: 'RICOH GR IIIx', name: 'GR IIIx' },
   // E lens
   { type: 'own', slug: 'FE 24-70mm F2.8 GM II', name: 'FE 24-70mm F2.8 GM II' },
-  { type: 'own', slug: 'FE 70-200mm F2.8 GM OSS II', name: 'FE 70-200mm F2.8 GM OSS II' },
-  { type: 'own', slug: 'E 20-40mm F2.8 A062', name: '20-40mm F/2.8 Di III VXD' },
   { type: 'own', slug: 'E 28-200mm F2.8-5.6 A071', name: '28-200mm F/2.8-5.6 Di III RXD' },
 
   // 手放したカメラ・レンズ
@@ -29,11 +28,13 @@ export const cameraMaster = [
   { type: 'release', slug: 'FE 16-35mm F4 ZA OSS', name: 'Vario-Tessar T* FE 16-35mm F4 ZA OSS' },
   { type: 'release', slug: 'FE 20-70mm F4 G', name: 'FE 20-70mm F4 G' },
   { type: 'release', slug: 'FE 24-105mm F4 G OSS', name: 'FE 24-105mm F4 G OSS' },
+  { type: 'release', slug: 'FE 70-200mm F2.8 GM OSS II', name: 'FE 70-200mm F2.8 GM OSS II' },
   { type: 'release', slug: 'FE 70-300mm F4.5-5.6 G OSS', name: 'FE 70-300mm F4.5-5.6 G OSS' },
   { type: 'release', slug: 'FE 24mm F2.8 G', name: 'FE 24mm F2.8 G' },
   { type: 'release', slug: 'FE 40mm F2.5 G', name: 'FE 40mm F2.5 G' },
   { type: 'release', slug: 'FE 55mm F1.8 ZA', name: 'Sonnar T* FE 55mm F1.8 ZA' },
   { type: 'release', slug: 'FE 90mm F2.8 Macro G OSS', name: 'FE 90mm F2.8 Macro G OSS' },
+  { type: 'release', slug: 'E 20-40mm F2.8 A062', name: '20-40mm F/2.8 Di III VXD' },
   // F lens
   { type: 'release', slug: '18.0-55.0 mm f/3.5-5.6', name: 'AF-P DX NIKKOR 18-55mm f/3.5-5.6G VR' },
   { type: 'release', slug: '70.0-300.0 mm f/4.5-6.3', name: 'AF-P DX NIKKOR 70-300mm f/4.5-6.3G ED VR' },

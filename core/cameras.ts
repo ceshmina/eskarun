@@ -5,12 +5,13 @@ export const cameraMaster = [
   { type: 'own', slug: 'ILCE-7CM2', name: 'α7C II' },
   // compact
   { type: 'own', slug: 'iPhone 15 Pro', name: 'iPhone 15 Pro' },
-  { type: 'own', slug: 'LEICA D-Lux 8', name: 'D-LUX 8' },
+  { type: 'own', slug: 'X100VI', name: 'X100VI' },
   { type: 'own', slug: 'RICOH GR III', name: 'GR III' },
   { type: 'own', slug: 'RICOH GR IIIx', name: 'GR IIIx' },
   // E lens
   { type: 'own', slug: 'FE 24-70mm F2.8 GM II', name: 'FE 24-70mm F2.8 GM II' },
   { type: 'own', slug: 'E 28-200mm F2.8-5.6 A071', name: '28-200mm F/2.8-5.6 Di III RXD' },
+  { type: 'own', slug: 'Viltrox 50mm F2.0 FE', name: 'AF 50mm F2.0' },
 
   // 手放したカメラ・レンズ
   // E body
@@ -24,6 +25,7 @@ export const cameraMaster = [
   // compact
   { type: 'release', slug: 'iPhone 12', name: 'iPhone 12' },
   { type: 'release', slug: 'foodie', name: 'iPhone 12' },
+  { type: 'release', slug: 'LEICA D-Lux 8', name: 'D-LUX 8' },
   // E lens
   { type: 'release', slug: 'FE 16-35mm F4 ZA OSS', name: 'Vario-Tessar T* FE 16-35mm F4 ZA OSS' },
   { type: 'release', slug: 'FE 20-70mm F4 G', name: 'FE 20-70mm F4 G' },

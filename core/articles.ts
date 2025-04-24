@@ -107,9 +107,6 @@ export class Article {
         if (exif.focalLength35) {
           captions2.push(`${exif.focalLength35}mm`)
         }
-        if (exif.scene === 0) {
-          captions2.push('portrait mode')
-        }
       }
       if (model.indexOf('iPhone')) {
         if (exif.fNumber) {

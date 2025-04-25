@@ -70,7 +70,8 @@ export class Article {
         fNumber: exif.FNumber || null,
         shutterSpeed: exif.ExposureTime || null,
         iso: exif.ISOSpeedRatings || exif.ISO || null,
-        creativeStyle: exif.CreativeStyle === 0 ? 'ST' : exif.CreativeStyle || null
+        creativeStyle: exif.CreativeStyle === 0 ? 'ST' : exif.CreativeStyle || null,
+        exposureCompensation: exif.ExposureCompensation || null
       }
     })
     return new Map(urls.map((url, i) => [url, exifs[i]]))
@@ -95,6 +96,7 @@ export class Article {
         captions1.push(`${exif.lens}`)
       }
       const captions2 = []
+      const captions3 = []
       if (model.indexOf('iPhone') && exif.focalLength) {
         if (exif.focalLength35 && exif.focalLength !== exif.focalLength35) {
           captions2.push(`${exif.focalLength} (${exif.focalLength35}) mm`)
@@ -122,10 +124,24 @@ export class Article {
           captions2.push(`ISO${exif.iso}`)
         }
         if (exif.creativeStyle) {
-          captions2.push(`${exif.creativeStyle}`)
+          captions3.push(`${exif.creativeStyle}`)
+        }
+        if (exif.exposureCompensation !== null && exif.exposureCompensation !== 0) {
+          const sign = exif.exposureCompensation > 0 ? '+' : '';
+          captions3.push(`${sign}${exif.exposureCompensation}EV`)
         }
       }
-      const caption = captions1.join(', ') + (captions2.length > 0 ? `<br>- ${captions2.join(', ')}` : '')
+      let caption = captions1.join(', ');
+      if (captions2.length > 0) {
+        caption += `<br>- ${captions2.join(', ')}`;
+      }
+      if (captions3.length > 0) {
+        if (captions2.length > 0) {
+          caption += ` / ${captions3.join(', ')}`;
+        } else {
+          caption += `<br>- ${captions3.join(', ')}`;
+        }
+      }
       return [url, caption]
     }))
   }

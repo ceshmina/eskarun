@@ -62,7 +62,6 @@ export class Article {
     const exifs = (await Promise.all(
       exifUrls.map(url => fetch(url).then(res => res.json()))
     )).map(exif => {
-      const scene = exif.SceneCaptureType
       return {
         model: getCameraName(exif.Model),
         lens: getCameraName(exif.LensModel),
@@ -70,9 +69,8 @@ export class Article {
         focalLength35: exif.FocalLengthIn35mmFilm || null,
         fNumber: exif.FNumber || null,
         shutterSpeed: exif.ExposureTime || null,
-        iso: exif.ISOSpeedRatings || null,
-        // 数値の0が入ることがあるため、undefinedと区別する
-        scene: scene !== undefined ? scene : null
+        iso: exif.ISOSpeedRatings || exif.ISO || null,
+        creativeStyle: exif.CreativeStyle === 0 ? 'ST' : exif.CreativeStyle || null
       }
     })
     return new Map(urls.map((url, i) => [url, exifs[i]]))
@@ -117,11 +115,14 @@ export class Article {
           if (ss >= 1) {
             captions2.push(`${ss}s`)
           } else {
-            captions2.push(`1/${1 / ss}s`)
+            captions2.push(`1/${Math.round(1 / ss)}s`)
           }
         }
         if (exif.iso) {
           captions2.push(`ISO${exif.iso}`)
+        }
+        if (exif.creativeStyle) {
+          captions2.push(`${exif.creativeStyle}`)
         }
       }
       const caption = captions1.join(', ') + (captions2.length > 0 ? `<br>- ${captions2.join(', ')}` : '')

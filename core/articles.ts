@@ -66,10 +66,10 @@ export class Article {
         model: getCameraName(exif.Model),
         lens: getCameraName(exif.LensModel),
         focalLength: exif.FocalLength || null,
-        focalLength35: exif.FocalLengthIn35mmFilm || null,
+        focalLength35: exif.FocalLength35efl || exif.FocalLengthIn35mmFormat || exif.FocalLengthIn35mmFilm || null,
         fNumber: exif.FNumber || null,
         shutterSpeed: exif.ExposureTime || null,
-        iso: exif.ISOSpeedRatings || exif.ISO || null,
+        iso: exif.StandardOutputSensitivity || exif.ISOSpeedRatings || exif.ISO || null,
         creativeStyle: exif.CreativeStyle === 0 ? 'ST' : exif.CreativeStyle === 3 ? 'PT' : exif.CreativeStyle || null,
         filmMode: exif.FilmMode === 0 ? 'Provia' : 
           exif.FilmMode === 2048 ? 'Classic Neg' : 
@@ -106,13 +106,13 @@ export class Article {
       const captions3 = []
       if (model.indexOf('iPhone') && exif.focalLength) {
         if (exif.focalLength35 && exif.focalLength !== exif.focalLength35) {
-          captions2.push(`${exif.focalLength} (${exif.focalLength35}) mm`)
+          captions2.push(`${Math.round(exif.focalLength)} (${Math.round(exif.focalLength35)}) mm`)
         } else {
-          captions2.push(`${exif.focalLength}mm`)
+          captions2.push(`${Math.round(exif.focalLength)}mm`)
         }
       } else if (!model.indexOf('iPhone')) {
         if (exif.focalLength35) {
-          captions2.push(`${exif.focalLength35}mm`)
+          captions2.push(`${Math.round(exif.focalLength35)}mm`)
         }
       }
       if (model.indexOf('iPhone')) {

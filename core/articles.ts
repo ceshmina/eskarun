@@ -70,7 +70,10 @@ export class Article {
         fNumber: exif.FNumber || null,
         shutterSpeed: exif.ExposureTime || null,
         iso: exif.StandardOutputSensitivity || exif.ISOSpeedRatings || exif.ISO || null,
-        creativeStyle: exif.CreativeStyle === 0 ? 'ST' : exif.CreativeStyle === 3 ? 'PT' : exif.CreativeStyle || null,
+        creativeStyle: exif.CreativeStyle === 0 ? 'ST' :
+          exif.CreativeStyle === 1 ? 'VV' :
+          exif.CreativeStyle === 3 ? 'PT' :
+          exif.CreativeStyle || null,
         filmMode: exif.FilmMode === 0 ? 'Provia' : 
           exif.FilmMode === 2048 ? 'Classic Neg' : 
           exif.FilmMode === 1536 ? 'Classic Chrome' :

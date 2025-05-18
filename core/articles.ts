@@ -81,6 +81,7 @@ export class Article {
           exif.FilmMode === 512 ? 'Velvia' :
           exif.FilmMode === 288 ? 'Astia' :
           exif.FilmMode === 2560 ? 'Nostalgic Neg' :
+          exif.FilmMode === 1280 ? 'Pro Neg. Std' :
           exif.FilmMode || null,
         exposureCompensation: exif.ExposureCompensation || null
       }
@@ -142,7 +143,10 @@ export class Article {
         }
         if (exif.exposureCompensation !== null && exif.exposureCompensation !== 0) {
           const sign = exif.exposureCompensation > 0 ? '+' : '';
-          captions3.push(`${sign}${exif.exposureCompensation}EV`)
+          const value = Number.isInteger(exif.exposureCompensation) ? 
+            exif.exposureCompensation : 
+            exif.exposureCompensation.toFixed(1);
+          captions3.push(`${sign}${value}EV`)
         }
       }
       let caption = captions1.join(', ');

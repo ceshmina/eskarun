@@ -83,6 +83,8 @@ export class Article {
           exif.FilmMode === 2560 ? 'Nostalgic Neg' :
           exif.FilmMode === 1280 ? 'Pro Neg. Std' :
           exif.FilmMode || null,
+        imageTone: exif.ImageTone === 262 ? 'Positive Film' :
+          exif.ImageTone || null,
         exposureCompensation: exif.ExposureCompensation || null
       }
     })
@@ -140,6 +142,9 @@ export class Article {
         }
         if (exif.filmMode) {
           captions3.push(`${exif.filmMode}`)
+        }
+        if (exif.imageTone) {
+          captions3.push(`${exif.imageTone}`)
         }
         if (exif.exposureCompensation !== null && exif.exposureCompensation !== 0) {
           const sign = exif.exposureCompensation > 0 ? '+' : '';

@@ -84,6 +84,7 @@ export class Article {
           exif.FilmMode === 1280 ? 'Pro Neg. Std' :
           exif.FilmMode || null,
         imageTone: exif.ImageTone === 262 ? 'Positive Film' :
+          exif.ImageTone === 257 ? 'Vivid' :
           exif.ImageTone || null,
         exposureCompensation: exif.ExposureCompensation || null
       }

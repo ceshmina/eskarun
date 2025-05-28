@@ -26,28 +26,32 @@ export const aggArticlesByMonth = async () => {
 export const aggArticlesByCamera = async () => {
   const articles = await getArticles()
   const agg = new Map<string, number>()
+  const cameraLastAppearance = new Map<string, string>() // カメラ名 -> 最新のslug
+  
   await Promise.all(
     articles.map(async (article) => {
       const cameras = await article.uniqueCameras()
       cameras.forEach(camera => {
         agg.set(camera, (agg.get(camera) || 0) + 1)
+        // より新しいslugを記録（記事は既にslugの降順でソートされている）
+        if (!cameraLastAppearance.has(camera)) {
+          cameraLastAppearance.set(camera, article.slug)
+        }
       })
     })
   )
-  const own = Array.from(new Set(cameraMaster
-    .filter(camera => camera.type == 'own')
-    .map(camera => camera.name)))
-  const release = Array.from(new Set(cameraMaster
-    .filter(camera => camera.type == 'release')
-    .map(camera => camera.name)))
-  const old = Array.from(new Set(cameraMaster
-    .filter(camera => camera.type == 'old')
-    .map(camera => camera.name)))
-  return {
-    own: own.map(camera => ({ camera, count: agg.get(camera) || 0 })),
-    release: release.map(camera => ({ camera, count: agg.get(camera) || 0 })),
-    old: old.map(camera => ({ camera, count: agg.get(camera) || 0 }))
-  }
+  
+  // カメラを最新出現順でソート
+  const cameras = Array.from(agg.entries())
+    .map(([camera, count]) => ({ 
+      camera, 
+      count, 
+      lastSlug: cameraLastAppearance.get(camera) || '' 
+    }))
+    .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
+    .map(({ camera, count }) => ({ camera, count }))
+  
+  return cameras
 }
 
 export const aggArticlesByLocation = async () => {

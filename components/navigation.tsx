@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { aggArticlesByMonth, aggArticlesByCamera, aggArticlesByLocation } from '@/core/aggregate'
 import Year from '@/components/navigation/year'
-import Camera from '@/components/navigation/camera'
 
 export default async function Navigation() {
   const articlesByMonth = await aggArticlesByMonth()
@@ -46,11 +45,13 @@ export default async function Navigation() {
 
       <div className="mt-12">
         <h2 className="text-lg font-bold">撮影機材別</h2>
-        <div className="my-4">
-          <Camera title="所持中" cameras={articlesByCamera.own} isFirstOpen={true} />
-          <Camera title="手放したカメラ・レンズ" cameras={articlesByCamera.release} isFirstOpen={false} />
-          <Camera title="オールドレンズ他" cameras={articlesByCamera.old} isFirstOpen={false} />
-        </div>
+        <ul className="my-4">
+          {articlesByCamera.map(({ camera, count }) => (
+            <li key={camera} className="my-1 text-sm font-normal">
+              <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className="mt-12 mb-16">

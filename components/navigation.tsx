@@ -46,11 +46,26 @@ export default async function Navigation() {
       <div className="mt-12">
         <h2 className="text-lg font-bold">撮影機材別</h2>
         <ul className="my-4">
-          {articlesByCamera.map(({ camera, count }) => (
-            <li key={camera} className="my-1 text-sm font-normal">
-              <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
-            </li>
-          ))}
+          <li className="my-1 text-sm font-bold">
+            カメラ
+            <ul className="mt-2 mb-4 ml-4">
+              {articlesByCamera.cameras.map(({ camera, count }) => (
+                <li key={camera} className="my-1 text-sm font-normal">
+                  <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
+                </li>
+              ))}
+            </ul>
+          </li>
+          <li className="my-1 text-sm font-bold">
+            レンズ
+            <ul className="mt-2 mb-4 ml-4">
+              {articlesByCamera.lenses.map(({ camera, count }) => (
+                <li key={camera} className="my-1 text-sm font-normal">
+                  <Link href={`/cameras/${camera}`} className="text-blue-300">{camera} ({count})</Link>
+                </li>
+              ))}
+            </ul>
+          </li>
         </ul>
       </div>
 

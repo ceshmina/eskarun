@@ -104,6 +104,15 @@ export class Article {
       .concat(Array.from(new Set(lenses)))
   }
 
+  async uniqueCamerasAndLenses() {
+    const exifs = Array.from((await this.exifs()).values())
+    const cameras = Array.from(new Set(exifs.map(exif => exif.model)
+      .filter(name => name !== null)))
+    const lenses = Array.from(new Set(exifs.map(exif => exif.lens)
+      .filter(name => name !== null)))
+    return { cameras, lenses }
+  }
+
   async cameraCaptions() {
     const exifs = await this.exifs()
     return new Map(Array.from(exifs).map(([url, exif]) => {

@@ -80,20 +80,40 @@ export const aggArticlesByLocation = async () => {
   const articles = await getArticles()
   const aggJapan = new Map<string, number>()
   const aggOther = new Map<string, number>()
+  const japanLastAppearance = new Map<string, string>() // 場所名 -> 最新のslug
+  const otherLastAppearance = new Map<string, string>() // 場所名 -> 最新のslug
+  
   articles.forEach(article => {
     const location = article.location
     if (location.includes('Japan')) {
       aggJapan.set(location, (aggJapan.get(location) || 0) + 1)
+      if (!japanLastAppearance.has(location)) {
+        japanLastAppearance.set(location, article.slug)
+      }
     } else {
       aggOther.set(location, (aggOther.get(location) || 0) + 1)
+      if (!otherLastAppearance.has(location)) {
+        otherLastAppearance.set(location, article.slug)
+      }
     }
   })
+  
   return {
     japan: Array.from(aggJapan.entries())
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([location, count]) => ({ location, count })),
+      .map(([location, count]) => ({
+        location,
+        count,
+        lastSlug: japanLastAppearance.get(location) || ''
+      }))
+      .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
+      .map(({ location, count }) => ({ location, count })),
     other: Array.from(aggOther.entries())
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([location, count]) => ({ location, count }))
+      .map(([location, count]) => ({
+        location,
+        count,
+        lastSlug: otherLastAppearance.get(location) || ''
+      }))
+      .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
+      .map(({ location, count }) => ({ location, count }))
   }
 }

@@ -74,6 +74,7 @@ export class Article {
           exif.CreativeStyle === 1 ? 'VV' :
           exif.CreativeStyle === 3 ? 'PT' :
           exif.CreativeStyle === 15 ? 'FL' :
+          exif.CreativeStyle === 18 ? 'SH' :
           exif.CreativeStyle || null,
         filmMode: exif.FilmMode === 0 ? 'Provia' : 
           exif.FilmMode === 2048 ? 'Classic Neg' : 

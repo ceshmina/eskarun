@@ -1,5 +1,71 @@
 import { getArticles } from '@/core/articles'
-import { cameraMaster } from '@/core/cameras'
+
+type AggregationItem = {
+  key: string
+  count: number
+}
+
+const aggregateWithLastAppearance = <T>(
+  items: T[],
+  keyExtractor: (item: T) => string[],
+  slugExtractor: (item: T) => string
+): AggregationItem[] => {
+  const countMap = new Map<string, number>()
+  const lastAppearanceMap = new Map<string, string>()
+  
+  items.forEach(item => {
+    const keys = keyExtractor(item)
+    const slug = slugExtractor(item)
+    
+    keys.forEach(key => {
+      countMap.set(key, (countMap.get(key) || 0) + 1)
+      if (!lastAppearanceMap.has(key)) {
+        lastAppearanceMap.set(key, slug)
+      }
+    })
+  })
+  
+  return Array.from(countMap.entries())
+    .map(([key, count]) => ({
+      key,
+      count,
+      lastSlug: lastAppearanceMap.get(key) || ''
+    }))
+    .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
+    .map(({ key, count }) => ({ key, count }))
+}
+
+const aggregateWithLastAppearanceAsync = async <T>(
+  items: T[],
+  keyExtractor: (item: T) => Promise<string[]>,
+  slugExtractor: (item: T) => string
+): Promise<AggregationItem[]> => {
+  const countMap = new Map<string, number>()
+  const lastAppearanceMap = new Map<string, string>()
+  
+  await Promise.all(
+    items.map(async item => {
+      const keys = await keyExtractor(item)
+      const slug = slugExtractor(item)
+      
+      keys.forEach(key => {
+        countMap.set(key, (countMap.get(key) || 0) + 1)
+        if (!lastAppearanceMap.has(key)) {
+          lastAppearanceMap.set(key, slug)
+        }
+      })
+    })
+  )
+  
+  return Array.from(countMap.entries())
+    .map(([key, count]) => ({
+      key,
+      count,
+      lastSlug: lastAppearanceMap.get(key) || ''
+    }))
+    .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
+    .map(({ key, count }) => ({ key, count }))
+}
 
 export const aggArticlesByMonth = async () => {
   const articles = await getArticles()
@@ -25,95 +91,51 @@ export const aggArticlesByMonth = async () => {
 
 export const aggArticlesByCamera = async () => {
   const articles = await getArticles()
-  const aggCameras = new Map<string, number>()
-  const aggLenses = new Map<string, number>()
-  const cameraLastAppearance = new Map<string, string>() // カメラ名 -> 最新のslug
-  const lensLastAppearance = new Map<string, string>() // レンズ名 -> 最新のslug
   
-  await Promise.all(
-    articles.map(async (article) => {
-      const { cameras, lenses } = await article.uniqueCamerasAndLenses()
-      
-      cameras.forEach(camera => {
-        aggCameras.set(camera, (aggCameras.get(camera) || 0) + 1)
-        if (!cameraLastAppearance.has(camera)) {
-          cameraLastAppearance.set(camera, article.slug)
-        }
-      })
-      
-      lenses.forEach(lens => {
-        aggLenses.set(lens, (aggLenses.get(lens) || 0) + 1)
-        if (!lensLastAppearance.has(lens)) {
-          lensLastAppearance.set(lens, article.slug)
-        }
-      })
-    })
+  const cameras = await aggregateWithLastAppearanceAsync(
+    articles,
+    async (article) => {
+      const { cameras } = await article.uniqueCamerasAndLenses()
+      return cameras
+    },
+    (article) => article.slug
   )
   
-  // カメラを最新出現順でソート
-  const cameras = Array.from(aggCameras.entries())
-    .map(([camera, count]) => ({ 
-      camera, 
-      count, 
-      lastSlug: cameraLastAppearance.get(camera) || '' 
-    }))
-    .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
-    .map(({ camera, count }) => ({ camera, count }))
-  
-  // レンズを最新出現順でソート
-  const lenses = Array.from(aggLenses.entries())
-    .map(([camera, count]) => ({ 
-      camera, 
-      count, 
-      lastSlug: lensLastAppearance.get(camera) || '' 
-    }))
-    .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
-    .map(({ camera, count }) => ({ camera, count }))
+  const lenses = await aggregateWithLastAppearanceAsync(
+    articles,
+    async (article) => {
+      const { lenses } = await article.uniqueCamerasAndLenses()
+      return lenses
+    },
+    (article) => article.slug
+  )
   
   return {
-    cameras,
-    lenses
+    cameras: cameras.map(({ key, count }) => ({ camera: key, count })),
+    lenses: lenses.map(({ key, count }) => ({ camera: key, count }))
   }
 }
 
 export const aggArticlesByLocation = async () => {
   const articles = await getArticles()
-  const aggJapan = new Map<string, number>()
-  const aggOther = new Map<string, number>()
-  const japanLastAppearance = new Map<string, string>() // 場所名 -> 最新のslug
-  const otherLastAppearance = new Map<string, string>() // 場所名 -> 最新のslug
   
-  articles.forEach(article => {
-    const location = article.location
-    if (location.includes('Japan')) {
-      aggJapan.set(location, (aggJapan.get(location) || 0) + 1)
-      if (!japanLastAppearance.has(location)) {
-        japanLastAppearance.set(location, article.slug)
-      }
-    } else {
-      aggOther.set(location, (aggOther.get(location) || 0) + 1)
-      if (!otherLastAppearance.has(location)) {
-        otherLastAppearance.set(location, article.slug)
-      }
-    }
-  })
+  const japanArticles = articles.filter(article => article.location.includes('Japan'))
+  const otherArticles = articles.filter(article => !article.location.includes('Japan'))
+  
+  const japan = aggregateWithLastAppearance(
+    japanArticles,
+    (article) => [article.location],
+    (article) => article.slug
+  )
+  
+  const other = aggregateWithLastAppearance(
+    otherArticles,
+    (article) => [article.location],
+    (article) => article.slug
+  )
   
   return {
-    japan: Array.from(aggJapan.entries())
-      .map(([location, count]) => ({
-        location,
-        count,
-        lastSlug: japanLastAppearance.get(location) || ''
-      }))
-      .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
-      .map(({ location, count }) => ({ location, count })),
-    other: Array.from(aggOther.entries())
-      .map(([location, count]) => ({
-        location,
-        count,
-        lastSlug: otherLastAppearance.get(location) || ''
-      }))
-      .sort((a, b) => b.lastSlug.localeCompare(a.lastSlug))
-      .map(({ location, count }) => ({ location, count }))
+    japan: japan.map(({ key, count }) => ({ location: key, count })),
+    other: other.map(({ key, count }) => ({ location: key, count }))
   }
 }

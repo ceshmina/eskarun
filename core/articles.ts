@@ -4,6 +4,7 @@ import { parse, format } from 'date-fns'
 import matter from 'gray-matter'
 import { getCameraName } from '@/core/cameras'
 import { RawExifData, ProcessedExifData, CameraInfo } from '@/core/types'
+import { EXIF_CONSTANTS, DATE_CONSTANTS } from '@/core/constants'
 
 export class Article {
   readonly slug: string
@@ -45,7 +46,7 @@ export class Article {
 
   smallUrls() {
     const urls = this.imageUrls()
-    if (this.slug >= '20250101' && this.slug !== '20991231') {
+    if (this.slug >= DATE_CONSTANTS.THUMBNAIL_START_DATE && this.slug !== DATE_CONSTANTS.FALLBACK_DATE) {
       return urls.map(url => url.replace('medium', 'thumbnail'))
     } else {
       return []  // urls.map(url => url.replace('medium', 'small'))
@@ -71,25 +72,12 @@ export class Article {
         fNumber: exif.FNumber || null,
         shutterSpeed: exif.ExposureTime || null,
         iso: exif.StandardOutputSensitivity || exif.ISOSpeedRatings || exif.ISO || null,
-        creativeStyle: exif.CreativeStyle === 0 ? 'ST' :
-          exif.CreativeStyle === 1 ? 'VV' :
-          exif.CreativeStyle === 3 ? 'PT' :
-          exif.CreativeStyle === 15 ? 'FL' :
-          exif.CreativeStyle === 18 ? 'SH' :
-          exif.CreativeStyle || null,
-        filmMode: exif.FilmMode === 0 ? 'Provia' : 
-          exif.FilmMode === 2048 ? 'Classic Neg' : 
-          exif.FilmMode === 1536 ? 'Classic Chrome' :
-          exif.FilmMode === 512 ? 'Velvia' :
-          exif.FilmMode === 288 ? 'Astia' :
-          exif.FilmMode === 2560 ? 'Nostalgic Neg' :
-          exif.FilmMode === 1280 ? 'Pro Neg. Std' :
-          exif.FilmMode === 2816 ? 'Reala Ace' :
-          exif.FilmMode || null,
-        imageTone: exif.ImageTone === 262 ? 'Positive Film' :
-          exif.ImageTone === 257 ? 'Vivid' :
-          exif.ImageTone === 267 ? 'Negative Film' :
-          exif.ImageTone || null,
+        creativeStyle: exif.CreativeStyle !== undefined ? 
+          EXIF_CONSTANTS.CREATIVE_STYLES[exif.CreativeStyle as keyof typeof EXIF_CONSTANTS.CREATIVE_STYLES] || null : null,
+        filmMode: exif.FilmMode !== undefined ? 
+          EXIF_CONSTANTS.FILM_MODES[exif.FilmMode as keyof typeof EXIF_CONSTANTS.FILM_MODES] || null : null,
+        imageTone: exif.ImageTone !== undefined ? 
+          EXIF_CONSTANTS.IMAGE_TONES[exif.ImageTone as keyof typeof EXIF_CONSTANTS.IMAGE_TONES] || null : null,
         exposureCompensation: exif.ExposureCompensation || null
       } as ProcessedExifData
     })

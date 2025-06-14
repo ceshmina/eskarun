@@ -3,6 +3,7 @@ import path from 'path'
 import { parse, format } from 'date-fns'
 import matter from 'gray-matter'
 import { getCameraName } from '@/core/cameras'
+import { RawExifData, ProcessedExifData, CameraInfo } from '@/core/types'
 
 export class Article {
   readonly slug: string
@@ -56,15 +57,15 @@ export class Article {
     return urls.map(url => url.replace('medium', 'thumbnail'))
   }
 
-  async exifs() {
+  async exifs(): Promise<Map<string, ProcessedExifData>> {
     const urls = this.imageUrls()
     const exifUrls = urls.map(url => url.replace('medium', 'exif').replace('.webp', '.json'))
     const exifs = (await Promise.all(
-      exifUrls.map(url => fetch(url).then(res => res.json()))
+      exifUrls.map(url => fetch(url).then(res => res.json() as Promise<RawExifData>))
     )).map(exif => {
       return {
-        model: getCameraName(exif.Model),
-        lens: getCameraName(exif.LensModel),
+        model: getCameraName(exif.Model || ''),
+        lens: getCameraName(exif.LensModel || ''),
         focalLength: exif.FocalLength || null,
         focalLength35: exif.FocalLength35efl || exif.FocalLengthIn35mmFormat || exif.FocalLengthIn35mmFilm || null,
         fNumber: exif.FNumber || null,
@@ -90,7 +91,7 @@ export class Article {
           exif.ImageTone === 267 ? 'Negative Film' :
           exif.ImageTone || null,
         exposureCompensation: exif.ExposureCompensation || null
-      }
+      } as ProcessedExifData
     })
     return new Map(urls.map((url, i) => [url, exifs[i]]))
   }
@@ -105,16 +106,16 @@ export class Article {
       .concat(Array.from(new Set(lenses)))
   }
 
-  async uniqueCamerasAndLenses() {
+  async uniqueCamerasAndLenses(): Promise<CameraInfo> {
     const exifs = Array.from((await this.exifs()).values())
     const cameras = Array.from(new Set(exifs.map(exif => exif.model)
-      .filter(name => name !== null)))
+      .filter(name => name !== null))) as string[]
     const lenses = Array.from(new Set(exifs.map(exif => exif.lens)
-      .filter(name => name !== null)))
+      .filter(name => name !== null))) as string[]
     return { cameras, lenses }
   }
 
-  async cameraCaptions() {
+  async cameraCaptions(): Promise<Map<string, string>> {
     const exifs = await this.exifs()
     return new Map(Array.from(exifs).map(([url, exif]) => {
       const model = exif.model || ''

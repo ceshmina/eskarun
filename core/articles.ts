@@ -103,28 +103,32 @@ export class Article {
     return { cameras, lenses }
   }
 
+  private isIPhone(model: string): boolean {
+    return model.includes('iPhone')
+  }
+
   async cameraCaptions(): Promise<Map<string, string>> {
     const exifs = await this.exifs()
     return new Map(Array.from(exifs).map(([url, exif]) => {
       const model = exif.model || ''
       const captions1 = [`${model}`]
-      if (model.indexOf('iPhone') && exif.lens) {
+      if (!this.isIPhone(model) && exif.lens) {
         captions1.push(`${exif.lens}`)
       }
       const captions2 = []
       const captions3 = []
-      if (model.indexOf('iPhone') && exif.focalLength) {
+      if (!this.isIPhone(model) && exif.focalLength) {
         if (exif.focalLength35 && exif.focalLength !== exif.focalLength35) {
           captions2.push(`${Math.round(exif.focalLength)} (${Math.round(exif.focalLength35)}) mm`)
         } else {
           captions2.push(`${Math.round(exif.focalLength)}mm`)
         }
-      } else if (!model.indexOf('iPhone')) {
+      } else if (this.isIPhone(model)) {
         if (exif.focalLength35) {
           captions2.push(`${Math.round(exif.focalLength35)}mm`)
         }
       }
-      if (model.indexOf('iPhone')) {
+      if (!this.isIPhone(model)) {
         if (exif.fNumber) {
           captions2.push(`F${exif.fNumber}`)
         }

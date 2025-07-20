@@ -4,7 +4,8 @@ export const EXIF_CONSTANTS = {
     1: 'VV', 
     3: 'PT',
     15: 'FL',
-    18: 'SH'
+    18: 'SH',
+    19: 'FL2',
   } as const,
   
   FILM_MODES: {

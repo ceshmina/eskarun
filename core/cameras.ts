@@ -28,6 +28,7 @@ export const cameraMaster = [
   // E lens
   { type: 'release', slug: 'FE 16-35mm F4 ZA OSS', name: 'Vario-Tessar T* FE 16-35mm F4 ZA OSS' },
   { type: 'release', slug: 'FE 20-70mm F4 G', name: 'FE 20-70mm F4 G' },
+  { type: 'release', slug: 'FE 24-70mm F4 ZA OSS', name: 'Vario-Tessar T* FE 24-70mm F4 ZA OSS' },
   { type: 'release', slug: 'FE 24-105mm F4 G OSS', name: 'FE 24-105mm F4 G OSS' },
   { type: 'release', slug: 'FE 70-200mm F2.8 GM OSS II', name: 'FE 70-200mm F2.8 GM OSS II' },
   { type: 'release', slug: 'FE 70-300mm F4.5-5.6 G OSS', name: 'FE 70-300mm F4.5-5.6 G OSS' },

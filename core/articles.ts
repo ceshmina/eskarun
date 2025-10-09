@@ -36,7 +36,7 @@ export class Article {
 
   imageUrls() {
     const urls: string[] = []
-    const regex = /(https:\/\/photos\.apkas\.net\/medium\/.*?\.webp)/g
+    const regex = /(https:\/\/photos\.old\.apkas\.net\/medium\/.*?\.webp)/g
     let match: RegExpExecArray | null
     while ((match = regex.exec(this.content)) !== null) {
       urls.push(match[1])

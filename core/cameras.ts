@@ -8,6 +8,7 @@ export const cameraMaster = [
   { type: 'own', slug: 'RICOH GR III', name: 'GR III' },
   // E lens
   { type: 'own', slug: 'FE 24-70mm F2.8 GM II', name: 'FE 24-70mm F2.8 GM II' },
+  { type: 'own', slug: 'FE 50mm F1.4 GM', name: 'FE 50mm F1.4 GM' },
 
   // 手放したカメラ・レンズ
   // E body

@@ -127,7 +127,7 @@ export default async function Page({ params }: Readonly<{ params: { slug: string
 
       <p className="text-sm text-gray-500 mt-16 mb-2 mx-4 md:mx-0 leading-6">
         <FaLocationDot className="text-base inline-block mr-2 pb-[2px]" />
-        <Link href={`/locations/${article.location}`} className="text-blue-500">{article.location}</Link>
+        {article.location}
       </p>
 
       {uniqueCameras.length > 0 && <p className="text-sm text-gray-500 mt-2 mb-8 mx-4 md:mx-0 leading-6">

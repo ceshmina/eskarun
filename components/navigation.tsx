@@ -1,10 +1,8 @@
-import Link from 'next/link'
-import { aggArticlesByMonth, aggArticlesByLocation } from '@/core/aggregate'
+import { aggArticlesByMonth } from '@/core/aggregate'
 import Year from '@/components/navigation/year'
 
 export default async function Navigation() {
   const articlesByMonth = await aggArticlesByMonth()
-  const articlesByLocation = await aggArticlesByLocation()
   return (
     <div>
       <div>
@@ -13,32 +11,6 @@ export default async function Navigation() {
           {articlesByMonth.map(({ year, months }, index) => (
             <Year key={year} year={year} months={months} showOrder={index} />
           ))}
-        </ul>
-      </div>
-
-      <div className="mt-12">
-        <h2 className="text-lg font-bold">場所別</h2>
-        <ul className="my-4">
-          <li className="my-1 text-sm font-bold">
-            日本
-            <ul className="mt-2 mb-4 ml-4">
-              {articlesByLocation.japan.map(({ location, count }) => {
-                return (<li key={location} className="my-1 text-sm font-normal">
-                  <Link href={`/locations/${location}`} className="text-blue-300">{location} ({count})</Link>
-                </li>)
-              })}
-            </ul>
-          </li>
-          <li className="my-1 text-sm font-bold">
-            海外
-            <ul className="mt-2 mb-4 ml-4">
-              {articlesByLocation.other.map(({ location, count }) => {
-                return (<li key={location} className="my-1 text-sm font-normal">
-                  <Link href={`/locations/${location}`} className="text-blue-300">{location} ({count})</Link>
-                </li>)
-              })}
-            </ul>
-          </li>
         </ul>
       </div>
     </div>
